@@ -16,8 +16,8 @@ class Blofin:
         self.symbol = symbol
         self.api_key = os.getenv("API_KEY")
         self.secret = os.getenv("SECRET")
-        self.url = "https://openapi.blofin.com"
         self.passphrase = os.getenv("PASSPHRASE")
+        self.url = "https://openapi.blofin.com"
 
     ################################ GENERATE SIGNATURE ################################
 
