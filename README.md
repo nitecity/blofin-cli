@@ -24,6 +24,7 @@
 
 5. Interact with your account!
 
-*Just one thing! If you want to set the size of your order, you have to enter the quantity of the ticker contracts and it must be an integer*
-*Exmple: For Bitcoin, each contract worth 0.001 $BTC | For Solana, each contract worth 1 $SOL*
+*Just one thing! If you want to set the size of your order, you have to enter the quantity of the ticker contracts*
+*Exmple: For Bitcoin, each contract worth 0.001 $BTC and minimum size must be equal or more than "0.1"*
+*To see other tickers info, go to this URL: [Contracts Info](https://openapi.blofin.com/api/v1/market/instruments?instId=btc-usdt")
 
