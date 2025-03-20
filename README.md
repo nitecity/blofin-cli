@@ -11,6 +11,7 @@
       pip install python-dotenv
     ```
 2. Download The Repo:
+
     ```
       git clone https://github.com/nitecity/blofin-cli
     ```
