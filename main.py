@@ -108,7 +108,7 @@ def run():
     elif prompt == "2":
 
         try:
-            isTrigger = input("\nIs it Trigger/Algo Orders?[y/n]\n> ").lower().strip()
+            isTrigger = input("\nLokking for Trigger/Algo Orders?[y/n]\n> ").lower().strip()
         except:
             print("\nOperation cancelled by user")
             return
