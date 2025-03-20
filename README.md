@@ -43,5 +43,5 @@
 
 *Just one thing! When you're going to set your order size, you have to enter the quantity of the contract*<br>
 *Exmple: For Bitcoin, each contract worth 0.001 $BTC and minimum size must be equal or more than "0.1"*<br>
-*To see other tickers info, go to this URL: [Contracts Info](https://openapi.blofin.com/api/v1/market/instruments")<br>
+*To see other tickers info, go to this URL: [Contracts Info](https://openapi.blofin.com/api/v1/market/instruments)<br>
 
