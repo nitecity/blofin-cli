@@ -4,7 +4,7 @@
 #### Use this script and you don't have to login to your account everytime!
 
 1. Prerequisites:
-    - Creat your API Key here: [Blofin](https://blofin.com/account/apis)
+    - Creat your API Keys here: [Blofin](https://blofin.com/account/apis)
     - Install [Python](https://www.python.org/downloads/)
     - Open Terminal and Install ``dotenv`` package:<br><br>
         ```
