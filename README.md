@@ -3,7 +3,7 @@
 ### This script works with [Blofin Exchange](https://blofin.com)
 
 1. Prerequisites:
-  - Creat your API Key from [Blofin](https://blofin.com/account/apis)
+  - Creat your API Key here: [Blofin](https://blofin.com/account/apis)
   - Install [Python](https://www.python.org/downloads/)
   - Open Terminal and Install ``dotenv`` package:
 
