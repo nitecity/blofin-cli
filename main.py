@@ -28,7 +28,7 @@ def run():
     print('You have to enter a quantity of the contract in the "How Many Contracts?"')
     print('More information:')
     print('https://openapi.blofin.com/api/v1/market/instruments?instId=sol-usdt')
-    print('[The url above, shows information about Solana. Feel free to change it]')
+    print('[The url above, shows information about Solana. Feel free to change "sol-usdt" to any other pair]')
     print('***********************************************************************')
     print('\nLet\'s get started!')
     print('\nPick One of The Options Below:\n')
