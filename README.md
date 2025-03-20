@@ -18,7 +18,7 @@
     ```
 
 3. Run `main.py`
-4. After making `.env` file with your API Keys, You'll see these options:
+4. After storing your API Keys, You'll see these options:
 
     <img width="689" alt="trade" src="https://github.com/user-attachments/assets/351729fc-440c-4426-b7e1-cafb970b2edf" />
 
