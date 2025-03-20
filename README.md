@@ -24,6 +24,7 @@
 
 5. Interact with your account!
      Let's place a limit order<br>
+
     <img width="723" alt="examp" src="https://github.com/user-attachments/assets/88b925ce-7f47-4f1f-aa3a-c5878d16f3bc" />
 
   
