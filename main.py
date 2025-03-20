@@ -26,7 +26,7 @@ def run():
     print('You are going to interact with your account in "Blofin.com"')
     print('There is something you need to know about the size of your orders:')
     print('For BTC, "1" contract worth "0.001" $BTC | For ETH, "1" contract worth "0.01" $ETH')
-    print('You have to enter a quantity of contract in the "How Many Contracts?" field which is an integer')
+    print('You have to enter a quantity of the contract in the "How Many Contracts?"')
     print('More information:')
     print('https://openapi.blofin.com/api/v1/market/instruments?instId=sol-usdt')
     print('[The url above, shows information about Solana. Feel free to change it]')
