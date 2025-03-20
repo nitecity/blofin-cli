@@ -14,6 +14,7 @@
 
     ```
       git clone https://github.com/nitecity/blofin-cli
+      cd blofin-cli
     ```
 
 
