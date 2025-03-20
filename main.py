@@ -1,5 +1,4 @@
 # BTC: 1 contract = 0.001 btc | ETH: 1 contract = 0.01 eth . 
-# More information: https://openapi.blofin.com/api/v1/market/instruments?instId=op-usdt [This url shows information about OP. Feel free to change it]
 import os
 from dotenv import load_dotenv, set_key
 
