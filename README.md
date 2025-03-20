@@ -8,6 +8,7 @@
     - Open Terminal and Install ``dotenv`` package:<br><br>
         ```
           pip install python-dotenv
+          pip install requests
         ```
 2. Download The Repo:
 
