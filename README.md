@@ -1,6 +1,7 @@
 ## Interact With Your Account Via Terminal
 
-### This script works with [Blofin Exchange](https://blofin.com)
+### This script only works with [Blofin Exchange](https://blofin.com)
+#### Use this script and you don't have to login to your account everytime!
 
 1. Prerequisites:
     - Creat your API Key here: [Blofin](https://blofin.com/account/apis)
