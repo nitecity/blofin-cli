@@ -17,4 +17,8 @@
       cd blofin-cli
     ```
 
+3. Run `main.py`
+4. You'll see these options:
+    ![options](https://imgur.com/a/Lu8vW0d)
+
 
