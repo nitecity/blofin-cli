@@ -19,6 +19,7 @@
 
 3. Run `main.py`
 4. You'll see these options:
+
     <img width="687" alt="trade" src="https://github.com/user-attachments/assets/bd8b8188-18fa-4d4d-b382-89a1011b6883" />
 
 
