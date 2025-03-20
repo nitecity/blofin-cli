@@ -21,14 +21,14 @@
 3. Run the script:
     <p>Windows</p>
 
-        ```
+   ```
             py main.py
-        ```
+   ```
    <p>Mac and Linux</p>
 
-       ```
+   ```
            python3 main.py
-       ```
+   ```
 
 4. After storing your API Keys, You'll see these options:
 
