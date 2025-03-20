@@ -5,7 +5,7 @@
 1. Prerequisites:
     - Creat your API Key here: [Blofin](https://blofin.com/account/apis)
     - Install [Python](https://www.python.org/downloads/)
-    - Open Terminal and Install ``dotenv`` package:<br>
+    - Open Terminal and Install ``dotenv`` package:<br><br>
     ```
       pip install python-dotenv
     ```
