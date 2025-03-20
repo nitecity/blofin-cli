@@ -19,6 +19,6 @@
 
 3. Run `main.py`
 4. You'll see these options:
-    ![options](https://imgur.com/a/Lu8vW0d)
+    ![options](https://ibb.co/k2GPQ2Sh)
 
 
