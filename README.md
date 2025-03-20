@@ -20,7 +20,7 @@
 3. Run `main.py`
 4. You'll see these options:
 
-    <img width="687" alt="trade" src="https://github.com/user-attachments/assets/bd8b8188-18fa-4d4d-b382-89a1011b6883" />
+    <img width="689" alt="trade" src="https://github.com/user-attachments/assets/351729fc-440c-4426-b7e1-cafb970b2edf" />
 
 5. Interact with your account!
      <p>Let's place a limit order</p>
