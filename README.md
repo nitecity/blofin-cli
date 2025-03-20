@@ -23,9 +23,10 @@
     <img width="687" alt="trade" src="https://github.com/user-attachments/assets/bd8b8188-18fa-4d4d-b382-89a1011b6883" />
 
 5. Interact with your account!
-     Let's place a limit order<br>
+     <p>Let's place a limit order</p>
 
-    <img width="723" alt="examp" src="https://github.com/user-attachments/assets/88b925ce-7f47-4f1f-aa3a-c5878d16f3bc" />
+    <img width="562" alt="examp" src="https://github.com/user-attachments/assets/106aec56-8eb4-4b80-8c1f-526a675028b3" />
+
 
   
 
