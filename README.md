@@ -18,7 +18,18 @@
       cd blofin-cli
     ```
 
-3. Run `main.py`
+3. Run the script:
+    <p>Windows</p>
+
+        ```
+            py main.py
+        ```
+   <p>Mac and Linux</p>
+
+       ```
+           python3 main.py
+       ```
+
 4. After storing your API Keys, You'll see these options:
 
     <img width="689" alt="trade" src="https://github.com/user-attachments/assets/351729fc-440c-4426-b7e1-cafb970b2edf" />
