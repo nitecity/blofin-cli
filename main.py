@@ -1,4 +1,5 @@
 # BTC: 1 contract = 0.001 btc | ETH: 1 contract = 0.01 eth . 
+# More information: https://openapi.blofin.com/api/v1/market/instruments?instId=op-usdt [This url shows information about OP. Feel free to change it]
 import os
 from dotenv import load_dotenv, set_key
 
@@ -34,7 +35,7 @@ def run():
     print('\nPick One of The Options Below:\n')
 
     try:
-        prompt = input("1. Place Order\n2. Get pending Orders\n3. Get Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API data\n11. Modify API data\n12. Get Balance\n\n> ")
+        prompt = input("1. Place Order\n2. Get pending Orders\n3. Get Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API info\n11. Modify API info\n12. Get Balance\n13. Trade History\n\n> ")
     except:
         print("\nOperation cancelled by user")
         return
@@ -253,8 +254,26 @@ def run():
         b = Blofin()
         b.check_balance()
 
+    elif prompt == "13":
+        try:
+            symbol = input('\nEnter symbol: [Default: All symbols]\n> ')
+            limit = input('How many trades: [Default: 10]\n> ')
+        except:
+            print("\nOperation cancelled by user")
+            return
+
+        b = Blofin()
+        if symbol and limit:
+            b.get_trade_history(limit, symbol)
+        elif symbol:
+            b.get_trade_history(symbol=symbol)
+        elif limit:
+            b.get_trade_history(limit)
+        else:
+            b.get_trade_history()
+
     else:
-        print("\nInvalid input! Enter a number between 1-12\n")
+        print("\nInvalid input! Enter a number between 1-13\n")
 
 
 run()
