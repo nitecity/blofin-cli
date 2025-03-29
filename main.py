@@ -196,7 +196,7 @@ def run():
     elif prompt == "11":
 
         try:
-            modify = input('\n1. Modify API Key\n2. Modify API Secret\n3. Modify Passphrase\n> ').strip()
+            modify = input('\n1. Modify API Key\n2. Modify API Secret\n3. Modify Passphrase\n4. Modify All\n> ').strip()
         except:
             print('\nOperation cancelled by user')
             return
@@ -246,6 +246,25 @@ def run():
             else:
                 print('No input! No changes made!')
 
+        elif modify == "4":
+                
+            try:
+                api_key = input('New API Key:\n> ').strip()
+                api_secret = input('New API Secret:\n> ').strip()
+                passphrase = input('New Passphrase:\n> ').strip()
+            except:
+                print('\nOperation cancelled by user')
+                return
+
+            if api_key and api_secret and passphrase:
+                load_dotenv(envfile)
+                set_key(envfile, 'API_KEY', api_key)
+                set_key(envfile, 'SECRET', api_secret)
+                set_key(envfile, 'PASSPHRASE', passphrase)
+                print('API Key, Secret and Passphrase Updated!')
+            else:
+                print('One or more fields are empty. No changes made!')
+        
         else:
             print('Invalid Option!')
     
