@@ -24,13 +24,7 @@ def run():
     from api import Blofin
     print('\n** Welcome **')
     print('You are going to interact with your account in "Blofin.com"')
-    print('There is something you need to know about the size of your orders:')
-    print('For BTC, "1" contract worth "0.001" $BTC | For ETH, "1" contract worth "0.01" $ETH')
-    print('You have to enter a quantity of the contract in the "How Many Contracts?"')
-    print('More information:')
-    print('https://openapi.blofin.com/api/v1/market/instruments?instId=sol-usdt')
-    print('[The url above, shows information about Solana. Feel free to change "sol-usdt" to any other pair]')
-    print('***********************************************************************')
+    print('************************************************************')
     print('\nLet\'s get started!')
     print('\nPick One of The Options Below:\n')
 
@@ -42,66 +36,75 @@ def run():
 
     if prompt == "1":
         try:
+            price = None
             symbol = input('Enter Symbol\nExample: [btc] | [eth]\n> ').upper().strip()
-            side = input("[long] | [short]?\n> ").lower().strip()
-            order_type = input("Order Type? [limit] | [market] | [trigger] | [post_only] | [fok] | [ioc]\n> ").lower().strip()
-            size = input('How Many Contracts? Example: [1]\n> ').strip()
-            entry = input("Price?\n> ").lower().strip() if not order_type == 'market' else print("Order Type = market")
+            order_type = input("Order Type? [limit] | [market] | [trigger] | [post_only]\n> ").lower().strip()
+            position_side = input("[long] | [short]:\n> ").lower().strip()
+            size = input('Size (%)? Example: [100] means 100%\n> ').strip()
+            price = input("Price:\n> ").lower().strip() if not order_type == 'market' else print("Order Type: market")
             tp = input("TP: (Optional)\n> ").strip()
             sl = input("SL: (Optional)\n> ").strip()
         except:
             print("\nOperation cancelled by user")
             return
 
+        try:
+            if price:
+                price = float(price)
+            if tp:
+                tp = float(tp)
+            if sl:
+                sl = float(sl)
+            size = float(size)
+        except ValueError:
+            print('Price, Size, TP and SL must be digits. Rerun the script again')
+            return
+
         print("\nOrder Information:")
         print(f'\nPair:          "{symbol}-USDT"')
-        print(f'Position Side: "{side}"')
+        print(f'Position Side: "{position_side}"')
         print(f'Order type:    "{order_type}"')
-        print(f'Contract(s):   "{size}"')
+        print(f'Size:          "{size}%"')
         if not order_type == "market":
-            print(f'Price:         "{entry}"')
+            print(f'Price:         "{price}"')
         print(f'TP:            "{tp}"')
         print(f'SL:            "{sl}"\n')
+
         try:
-            sure = input("\nDo You Want to Continue?[y/n]\n> ").lower().strip()
+            sure = input("\nAre You Sure? Default is yes [y/n]\n> ").lower().strip()
         except:
             print("\nOperation cancelled by user")
             return
         if sure == "no" or sure == "n":
+            print('Ok, see you later')
             return
 
         b = Blofin(symbol+"-USDT")
+        
+        size = b.calculate_size(size, position_side, order_type, price)
 
-        if side == 'long':
+        if position_side == 'long':
             if order_type == 'limit':
-                b.place_normal_order("long", "buy", "limit", size, tp, sl, entry)
+                b.place_normal_order("long", "buy", "limit", size, tp, sl, price)
             elif order_type == "post_only":
-                b.place_normal_order("long", "buy", "post_only", size, tp, sl, entry)
-            elif order_type == "fok":
-                b.place_normal_order("long", "buy", "fok", size, tp, sl, entry)
-            elif order_type == "ioc":
-                b.place_normal_order("long", "buy", "ioc", size, tp, sl, entry)
+                b.place_normal_order("long", "buy", "post_only", size, tp, sl, price)
             elif order_type == 'market':
                 b.place_normal_order("long", "buy", "market", size, tp, sl)
             elif order_type == 'trigger':
-                b.place_trigger_order("long", "buy", size, tp, sl, entry)
+                b.place_trigger_order("long", "buy", size, tp, sl, price)
             else:
                 print("Invalid Order Type")
                 return
     
-        if side == "short":
+        if position_side == "short":
             if order_type == 'limit':
-                b.place_normal_order("short", "sell", "limit", size, tp, sl, entry)
+                b.place_normal_order("short", "sell", "limit", size, tp, sl, price)
             elif order_type == "post_only":
-                b.place_normal_order("short", "sell", "post_only", size, tp, sl, entry)
-            elif order_type == "fok":
-                b.place_normal_order("short", "sell", "fok", size, tp, sl, entry)
-            elif order_type == "ioc":
-                b.place_normal_order("short", "sell", "ioc", size, tp, sl, entry)
+                b.place_normal_order("short", "sell", "post_only", size, tp, sl, price)
             elif order_type == 'market':
                 b.place_normal_order("short", "sell", "market", size, tp, sl)
             elif order_type == 'trigger':
-                b.place_trigger_order("short", "sell", size, tp, sl, entry)
+                b.place_trigger_order("short", "sell", size, tp, sl, price)
             else:
                 print("Invalid Order Type")
                 return
@@ -131,7 +134,7 @@ def run():
             with open(order_ids, 'r') as file:
                 contents = file.read()
                 print(contents)
-            order_type = input("\nOrder Type? [limit] | [trigger] | [post_only] | [fok] | [ioc]\n> ").lower().strip()
+            order_type = input("\nOrder Type? [limit] | [trigger] | [post_only]\n> ").lower().strip()
             id = input("Enter Order or Algo ID\n> ").strip()
         except:
             print("\nOperation cancelled by user")

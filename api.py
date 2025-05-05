@@ -7,6 +7,7 @@ import time
 import json
 import uuid
 import os
+import math
 import datetime
 from dotenv import load_dotenv
 load_dotenv()
@@ -152,17 +153,17 @@ class Blofin:
             "marginMode":self.get_margin_mode(),
             "positionSide":positionSide,
             "side":side,
-            "size":size,
+            "size":str(size),
             "orderPrice":"-1",
             "orderType":"trigger",
-            "triggerPrice":price,
+            "triggerPrice":str(price),
             "triggerPriceType": "last",
             "attachAlgoOrders":[{
-                "tpTriggerPrice":tp,
-                "tpOrderPrice":tp,
+                "tpTriggerPrice":str(tp),
+                "tpOrderPrice":str(tp),
                 "tpTriggerPriceType":"last",
-                "slTriggerPrice":sl,
-                "slOrderPrice":sl,
+                "slTriggerPrice":str(sl),
+                "slOrderPrice":str(sl),
                 "slTriggerPriceType":"last"
             }]
         }
@@ -212,18 +213,19 @@ class Blofin:
             "positionSide":positionSide,
             "side":side,
             "orderType":orderType,
-            "price":price,
-            "size":size,
-            "tpTriggerPrice": tp,
-            "tpOrderPrice": tp,
-            "slTriggerPrice":sl,
-            "slOrderPrice": sl
+            "price":str(price),
+            "size":str(size),
+            "tpTriggerPrice": str(tp),
+            "tpOrderPrice": str(tp),
+            "slTriggerPrice":str(sl),
+            "slOrderPrice": str(sl)
         }
 
         if orderType == "market":
             body.pop('price')
 
         try:
+            
             h = self.gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
@@ -245,7 +247,9 @@ class Blofin:
                 else:
                     if data['code'] == "1":
                         print(f'\nError Code: {data['data'][0]['code']}')
-                        print(f'Error Message: {data['msg']}. {data['data']['msg']}\n')
+                        print(f'Error Message: {data['msg']}. {data['data'][0]['msg']}\n')
+                        
+                        
                     else:
                         print(f'\nError Code: {data['code']}')
                         print(f'Error Message: {data['msg']}\n')
@@ -529,6 +533,7 @@ class Blofin:
                 print(f'Available:       {round(float(info['available']), 2)}')
                 print(f'Isolated Equity: {round(float(info['isolatedEquity']), 2)}')
                 print('#####################################\n')
+                return round(float(info['available']), 2)
             else:
                 print(f'\nError Code: {data['code']}')
                 print(f'Error Message: {data['msg']}')
@@ -635,6 +640,91 @@ class Blofin:
             print(f'HTTP error occurred: {http_err}')
         except Exception as err:
             print(f'Other error occurred: {err}')
+    
+    #################################### GET CONTRACT INFO #####################################
 
-# b = Blofin()
-# b.get_trade_history(limit="2")
+    def contract_info(self):
+        path = f'/api/v1/market/instruments?instId={self.symbol}'
+        method ='GET'
+
+        try:
+            res = requests.request(method, self.url+path)
+            data = res.json()
+            if data['code'] == "0":
+                contract_value = float(data['data'][0]['contractValue'])
+                min_size = data['data'][0]['minSize']
+                return [contract_value, min_size]
+            else:
+                print("Error in receiving contract info")
+
+        except requests.exceptions.HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+        except Exception as err:
+            print(f'Other error occurred: {err}')
+
+    ##################################### GET_LEVERAGE ########################################
+
+    def leverage(self, position_side):
+        path = f'/api/v1/account/batch-leverage-info?instId={self.symbol}&marginMode={self.get_margin_mode()}'
+        method = 'GET'
+        timestamp = int(round(time.time() * 1000))
+        nonce = str(uuid.uuid4())
+
+        try:
+            h = self.gen_signature(path, method, timestamp, nonce)
+            response = requests.request(method, self.url+path, headers=h)
+            data = response.json()
+            if data['code'] == "0":
+                if position_side == 'long':
+                    return int(data['data'][0]['leverage'])
+                elif position_side == 'short':
+                    return int(data['data'][1]['leverage'])
+            else:
+                print(f'\nError Code: {data['code']}')
+                print(f'Error Message: {data['msg']}')
+                print('Please refer to the docs:')
+                print('https://docs.blofin.com/index.html#errors\n')
+
+        except requests.exceptions.HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+        except Exception as err:
+            print(f'Other error occurred: {err}')
+
+    ##################################### Calculate Size #######################################
+
+    def calculate_size(self, size, position_side, order_type, price=None):
+        balance = self.check_balance()
+        [contract_value, min_size] = self.contract_info()
+        size_in_usdt = (balance * size) / 100
+        leverage_multiplier = self.leverage(position_side)
+        text = lambda x: print(f"Size: {x} Contract(s)")
+        
+        print('********************************************* IMPORTANT ************************************************')
+        print("If the order size looks less than entered, don't worry!\nSize calculation in Blofin is a little tricky!")
+        print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
+        print("There is more! For trigger orders, contract size must be a whole number. 0.5 is not acceptable. 1, 2, 3...")
+        print('*********************************************************************************************************\n')
+
+        if price is None:
+            price = self.get_market_price()
+
+        each_contract_in_usdt = (contract_value * price)
+        print(f"{size}% of Balance: {round(size_in_usdt, 2)} USDT")
+
+        if min_size == '1' or order_type == "trigger":
+            true_size = math.floor(size_in_usdt / each_contract_in_usdt)
+            text(true_size * leverage_multiplier)
+            return (true_size * leverage_multiplier)
+        
+        elif min_size == '0.1':
+            true_size = math.floor((size_in_usdt / each_contract_in_usdt) * 10 ) / 10
+            text(true_size * leverage_multiplier)
+            return (true_size * leverage_multiplier)
+            
+
+        elif min_size == '0.01':
+            true_size = math.floor((size_in_usdt / each_contract_in_usdt) * 100 ) / 100
+            text(true_size * leverage_multiplier)
+            return (true_size * leverage_multiplier)
+
+
