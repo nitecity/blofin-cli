@@ -697,13 +697,14 @@ class Blofin:
         [contract_value, min_size] = self.contract_info()
         size_in_usdt = (balance * size) / 100
         leverage_multiplier = self.leverage(position_side)
+        size_with_leverage = (size_in_usdt * leverage_multiplier)
         text = lambda x: print(f"Size: {x} Contract(s)")
         
-        print('********************************************* IMPORTANT ************************************************')
+        print('********************************************* IMPORTANT **********************************************************')
         print("If the order size looks less than entered, don't worry!\nSize calculation in Blofin is a little tricky!")
         print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
-        print("There is more! For trigger orders, contract size must be a whole number. 0.5 is not acceptable. 1, 2, 3...")
-        print('*********************************************************************************************************\n')
+        print("There is more! For trigger orders, contract size must be a whole number. 0.5 is not acceptable. Must be 1, 2, 3...")
+        print('******************************************************************************************************************\n')
 
         if price is None:
             price = self.get_market_price()
@@ -712,19 +713,19 @@ class Blofin:
         print(f"{size}% of Balance: {round(size_in_usdt, 2)} USDT")
 
         if min_size == '1' or order_type == "trigger":
-            true_size = math.floor(size_in_usdt / each_contract_in_usdt)
-            text(true_size * leverage_multiplier)
-            return (true_size * leverage_multiplier)
+            true_size = math.floor(size_with_leverage / each_contract_in_usdt)
+            text(true_size)
+            return true_size
         
         elif min_size == '0.1':
-            true_size = math.floor((size_in_usdt / each_contract_in_usdt) * 10 ) / 10
-            text(true_size * leverage_multiplier)
-            return (true_size * leverage_multiplier)
+            true_size = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
+            text(true_size)
+            return (true_size)
             
 
         elif min_size == '0.01':
-            true_size = math.floor((size_in_usdt / each_contract_in_usdt) * 100 ) / 100
-            text(true_size * leverage_multiplier)
-            return (true_size * leverage_multiplier)
+            true_size = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
+            text(true_size)
+            return (true_size)
 
 
