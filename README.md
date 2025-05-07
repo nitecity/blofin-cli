@@ -32,8 +32,8 @@
 
 4. After storing your API Keys, You'll see these options:
 
-    <img width="689" alt="trade" src="./1.png" />
+    <img width="689" alt="examp1" src="./imgs/1.png" />
 
 5. Let's place a limit order
 
-    <img width="562" alt="examp" src="./2.png" />
+    <img width="562" alt="examp2" src="./imgs/2.png" />
