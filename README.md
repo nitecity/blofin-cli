@@ -32,7 +32,7 @@
 
 4. After storing your API Keys, You'll see these options:
 
-    <img width="689" alt="trade" src="https://github.com/user-attachments/assets/351729fc-440c-4426-b7e1-cafb970b2edf" />
+    <img width="689" alt="trade" src="./1.png" />
 
 5. Let's place a limit order
 
