@@ -37,11 +37,3 @@
 5. Let's place a limit order
 
     <img width="562" alt="examp" src="https://github.com/user-attachments/assets/106aec56-8eb4-4b80-8c1f-526a675028b3" />
-
-
-  
-
-*Just one thing! When you're going to set your order size, you have to enter the quantity of the contract.<br>*
-*Exmple: For Bitcoin, each contract worth 0.001 $BTC and minimum size must be equal or more than "0.1"<br>*
-*To see other tickers info, Click Here: [Contracts Info](https://openapi.blofin.com/api/v1/market/instruments)<br>*
-
