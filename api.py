@@ -22,7 +22,7 @@ class Blofin:
 
     ################################ GENERATE SIGNATURE ################################
 
-    def gen_signature(self, path, method, timestamp, nonce, body={}):
+    def __gen_signature(self, path, method, timestamp, nonce, body={}):
         if body:
             prehash_string = f"{path}{method}{timestamp}{nonce}{json.dumps(body)}"
         else:
@@ -45,9 +45,23 @@ class Blofin:
         body = {
             "instId":self.symbol,
             "leverage":leverage,
-            "marginMode":self.get_margin_mode(),
+            "marginMode":self.get_margin_mode(True),
             "positionSide":positionSide
         }
+
+        def ok(pside):
+            print('\n#####################################')
+            print('Set Leverage Successfully')
+            print(f'Symbol:        {self.symbol}')
+            print(f'Leverage       {leverage}') 
+            print(f'Position Side: {pside}\n')
+            print('#####################################\n')
+
+        def error(data):
+            print(f'\nError Code: {data['code']}')
+            print(f'Error Message: {data['msg']}')
+            print('Please refer to the docs:')
+            print('https://docs.blofin.com/index.html#errors\n')
 
         if positionSide == 'both':
             both = ['long', 'short']
@@ -56,22 +70,13 @@ class Blofin:
                     nonce = str(uuid.uuid4())
                     timestamp = int(round(time.time() * 1000))
                     body['positionSide'] = pside
-                    h = self.gen_signature(path, method, timestamp, nonce, body)
+                    h = self.__gen_signature(path, method, timestamp, nonce, body)
                     response = requests.request(method, self.url+path, headers=h, json=body)
                     data = response.json()
                     if data['code'] == "0":
-                        print('\n#####################################')
-                        print("Set Leverage Successfully")
-                        print(f'Symbol:        {self.symbol}')
-                        print(f'Leverage       {leverage}')
-                        print(f'Position Side: {pside}')
-                        print('#####################################\n')
-                        
+                        ok(pside)
                     else:
-                        print(f'\nError Code: {data['code']}')
-                        print(f'Error Message: {data['msg']}')
-                        print('Please refer to the docs:')
-                        print('https://docs.blofin.com/index.html#errors\n')
+                        error(data)
 
                 except requests.exceptions.HTTPError as http_err:
                     print(f'HTTP error occurred: {http_err}')
@@ -81,22 +86,13 @@ class Blofin:
             try:
                 nonce = str(uuid.uuid4())
                 timestamp = int(round(time.time() * 1000))
-                h = self.gen_signature(path, method, timestamp, nonce, body)
+                h = self.__gen_signature(path, method, timestamp, nonce, body)
                 response = requests.request(method, self.url+path, headers=h, json=body)
                 data = response.json()
                 if data['code'] == "0":
-                    print('\n#####################################')
-                    print("Set Leverage Successfully")
-                    print(f'Symbol:        {self.symbol}')
-                    print(f'Leverage       {leverage}')
-                    print(f'Position Side: {positionSide}')
-                    print('#####################################\n')
-                    
+                    ok(positionSide)
                 else:
-                    print(f'\nError Code: {data['code']}')
-                    print(f'Error Message: {data['msg']}')
-                    print('Please refer to the docs:')
-                    print('https://docs.blofin.com/index.html#errors\n')
+                    error(data)
 
             except requests.exceptions.HTTPError as http_err:
                 print(f'HTTP error occurred: {http_err}')
@@ -109,13 +105,13 @@ class Blofin:
         words = symbols.split(',')
         modified_words = [element + '-usdt' for element in words]
         modified_symbols = ','.join(modified_words)
-        path = f"/api/v1/account/batch-leverage-info?instId={modified_symbols}&marginMode={self.get_margin_mode()}"
+        path = f"/api/v1/account/batch-leverage-info?instId={modified_symbols}&marginMode={self.get_margin_mode(True)}"
         method = "GET"
         nonce = str(uuid.uuid4())
         timestamp = int(round(time.time() * 1000))
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             res = requests.request(method, self.url+path, headers=h)
             data = res.json()
             if data['code'] == "0":
@@ -150,7 +146,7 @@ class Blofin:
         timestamp = int(round(time.time() * 1000))
         body = {
             "instId":self.symbol,
-            "marginMode":self.get_margin_mode(),
+            "marginMode":self.get_margin_mode(True),
             "positionSide":positionSide,
             "side":side,
             "size":str(size),
@@ -169,7 +165,7 @@ class Blofin:
         }
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce, body)
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if data['code'] == "0":
@@ -209,7 +205,7 @@ class Blofin:
         timestamp = int(round(time.time() * 1000))
         body = {
             "instId":self.symbol,
-            "marginMode":self.get_margin_mode(),
+            "marginMode":self.get_margin_mode(True),
             "positionSide":positionSide,
             "side":side,
             "orderType":orderType,
@@ -226,7 +222,7 @@ class Blofin:
 
         try:
             
-            h = self.gen_signature(path, method, timestamp, nonce, body)
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if not orderType == "market":
@@ -290,7 +286,7 @@ class Blofin:
         nonce = str(uuid.uuid4())
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce, body)
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             
@@ -341,12 +337,12 @@ class Blofin:
 
         body = {
             "instId":self.symbol,
-            "marginMode":self.get_margin_mode(),
+            "marginMode":self.get_margin_mode(True),
             "positionSide":positionSide,
         }
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce, body)
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if data['code'] == "0":
@@ -373,7 +369,7 @@ class Blofin:
         nonce = str(uuid.uuid4())
         timestamp = int(round(time.time() * 1000))
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             res = requests.request(method, self.url+path, headers = h)
             data = res.json()
             if data['code'] == "0":
@@ -415,13 +411,13 @@ class Blofin:
         timestamp = int(round(time.time() * 1000))
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             res = requests.request(method, self.url+path, headers = h)
             data = res.json()
             if data['code'] == "0":
                 info = data['data']
                 if info:
-                    print(f'{len(info)} Pending Order(s)')
+                    print(f'{len(info)} Pending Normal Order(s)')
                     for item in info:
                         print(f'\n#####################################')
                         print(f'Symbol:        {item['instId']}')
@@ -438,7 +434,7 @@ class Blofin:
                         print(f'Time:          {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
                         print(f'#####################################\n')
                 else:
-                    print('0 Pending Orders')
+                    print('0 Pending Normal Orders')
             else:
                 print(f'\nError Code:    {data['code']}')
                 print(f'Error Message: {data['msg']}')
@@ -460,9 +456,9 @@ class Blofin:
             res = requests.request(method, self.url+path)
             data = res.json()
             if data['code'] == "0":
-                return float(data['data'][0]['markPrice'])
+                return [float(data['data'][0]['markPrice']) , True]
             else:
-                print("Error in receiving market price")
+                return [0 , False]
 
         except requests.exceptions.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')
@@ -477,7 +473,7 @@ class Blofin:
         nonce = str(uuid.uuid4())
         timestamp = int(round(time.time() * 1000))
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             res = requests.request(method, self.url+path, headers = h)
             data = res.json()
             if data['code'] == "0":
@@ -522,7 +518,7 @@ class Blofin:
         nonce = str(uuid.uuid4())
         
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             response = requests.request(method, self.url+path, headers=h)
             data = response.json()
             if data['code'] == "0":
@@ -556,7 +552,7 @@ class Blofin:
         body = {"marginMode": marginMode}
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce, body)
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if data['code'] == "0":
@@ -574,19 +570,21 @@ class Blofin:
 
     ###################################### GET MARGIN MODE #####################################
 
-    def get_margin_mode(self):
+    def get_margin_mode(self, from_inside=False):
         path = "/api/v1/account/margin-mode"
         method = "GET"
         timestamp = int(round(time.time() * 1000))
         nonce = str(uuid.uuid4())
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             response = requests.request(method, self.url+path, headers=h)
             data = response.json()
             if data['code'] == "0":
-                print(f'\nMargin Mode: {data['data']['marginMode']}\n')
-                return data['data']['marginMode']
+                if not from_inside:
+                    print(f'\nMargin Mode: {data['data']['marginMode']}\n')
+                else:
+                    return data['data']['marginMode']
             else:
                 print(f'\nError Code: {data['code']}')
                 print(f'Error Message: {data['msg']}')
@@ -612,7 +610,7 @@ class Blofin:
         nonce = str(uuid.uuid4())
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             response = requests.request(method, self.url+path, headers=h)
             data = response.json()
 
@@ -665,13 +663,13 @@ class Blofin:
     ##################################### GET_LEVERAGE ########################################
 
     def leverage(self, position_side):
-        path = f'/api/v1/account/batch-leverage-info?instId={self.symbol}&marginMode={self.get_margin_mode()}'
+        path = f'/api/v1/account/batch-leverage-info?instId={self.symbol}&marginMode={self.get_margin_mode(True)}'
         method = 'GET'
         timestamp = int(round(time.time() * 1000))
         nonce = str(uuid.uuid4())
 
         try:
-            h = self.gen_signature(path, method, timestamp, nonce)
+            h = self.__gen_signature(path, method, timestamp, nonce)
             response = requests.request(method, self.url+path, headers=h)
             data = response.json()
             if data['code'] == "0":
@@ -707,8 +705,10 @@ class Blofin:
         print('******************************************************************************************************************\n')
 
         if price is None:
-            price = self.get_market_price()
-
+            price = self.get_market_price()[0]
+        if price == 0:
+            print("Error in getting market price")
+            return 0
         each_contract_in_usdt = (contract_value * price)
         print(f"{size}% of Balance: {round(size_in_usdt, 2)} USDT")
 

@@ -24,40 +24,77 @@ def run():
     from api import Blofin
     print('\n** Welcome **')
     print('You are going to interact with your account in "Blofin.com"')
-    print('************************************************************')
+    print('***********************************************************')
     print('\nLet\'s get started!')
     print('\nPick One of The Options Below:\n')
 
     try:
-        prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n\n> ")
+        prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n0. Exit\n\n> ")
     except:
         print("\nOperation cancelled by user")
         return
-
+    if prompt == '0':
+        return
     if prompt == "1":
         try:
+            valid_order_types = ['limit', 'market', 'trigger', 'post_only']
+            valid_position_sides = ['long', 'short']
             price = None
+
             symbol = input('Enter Symbol\nExample: [btc] | [eth]\n> ').upper().strip()
+            b = Blofin(symbol+"-USDT")
+            if not b.get_market_price()[1]:
+                print("Invalid Symbol")
+                return
             order_type = input("Order Type? [limit] | [market] | [trigger] | [post_only]\n> ").lower().strip()
+            if not order_type in valid_order_types:
+                print('Invalid Order Type')
+                return
             position_side = input("[long] | [short]:\n> ").lower().strip()
-            size = input('Size (%)? Example: [100] means 100%\n> ').strip()
+            if not position_side in valid_position_sides:
+                print('Invalid Position Side')
+                return
+            size = input('Size (%)? Example: [100] means "100%" of your balance\n> ').strip()
+            try:
+                size = float(size)
+                if size < 1 or size > 100:
+                    print('Size Must be 1-100')
+                    return
+            except ValueError:
+                print("Size must be digit")
+                return
             price = input("Price:\n> ").lower().strip() if not order_type == 'market' else print("Order Type: market")
+            try:
+                if price:
+                    price = float(price)
+                    if price == 0:
+                        print("Price Must be greater than 0")
+                        return
+            except ValueError:
+                print("Price must be digit")
+                return
             tp = input("TP: (Optional)\n> ").strip()
+            try:
+                if tp:
+                    tp = float(tp)
+                    if tp == 0:
+                        print("TP Must be greater than 0")
+                        return
+            except ValueError:
+                print("TP must be digit")
+                return
             sl = input("SL: (Optional)\n> ").strip()
+            try:
+                if sl:
+                    sl = float(tp)
+                    if sl == 0:
+                        print("SL Must be greater than 0")
+                        return
+            except ValueError:
+                print("SL must be digit")
+                return
         except:
             print("\nOperation cancelled by user")
-            return
-
-        try:
-            if price:
-                price = float(price)
-            if tp:
-                tp = float(tp)
-            if sl:
-                sl = float(sl)
-            size = float(size)
-        except ValueError:
-            print('Price, Size, TP and SL must be digits. Rerun the script again')
             return
 
         print("\nOrder Information:")
@@ -76,10 +113,10 @@ def run():
             print("\nOperation cancelled by user")
             return
         if sure == "no" or sure == "n":
-            print('Ok, see you later')
+            print('Ok, see you later!')
             return
 
-        b = Blofin(symbol+"-USDT")
+        
         
         size = b.calculate_size(size, position_side, order_type, price)
 
@@ -92,9 +129,6 @@ def run():
                 b.place_normal_order("long", "buy", "market", size, tp, sl)
             elif order_type == 'trigger':
                 b.place_trigger_order("long", "buy", size, tp, sl, price)
-            else:
-                print("Invalid Order Type")
-                return
     
         if position_side == "short":
             if order_type == 'limit':
@@ -105,22 +139,11 @@ def run():
                 b.place_normal_order("short", "sell", "market", size, tp, sl)
             elif order_type == 'trigger':
                 b.place_trigger_order("short", "sell", size, tp, sl, price)
-            else:
-                print("Invalid Order Type")
-                return
 
     elif prompt == "2":
-
-        try:
-            isTrigger = input("\nLooking for Trigger/Algo Orders?[y/n]\n> ").lower().strip()
-        except:
-            print("\nOperation cancelled by user")
-            return
         b = Blofin()
-        if isTrigger == "y" or isTrigger == "yes":
-            b.get_open_trigger_orders()
-        else:
-            b.get_open_normal_orders()
+        b.get_open_trigger_orders()
+        b.get_open_normal_orders()
 
     elif prompt == "3":
 
@@ -130,12 +153,12 @@ def run():
     elif prompt == "4":
 
         try:
-            print("\nPending Order or Algo IDs:")
+            print("\nPending Order ID/Algo IDs:")
             with open(order_ids, 'r') as file:
                 contents = file.read()
                 print(contents)
             order_type = input("\nOrder Type? [limit] | [trigger] | [post_only]\n> ").lower().strip()
-            id = input("Enter Order or Algo ID\n> ").strip()
+            id = input("Enter ID\n> ").strip()
         except:
             print("\nOperation cancelled by user")
             return
