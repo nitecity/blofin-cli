@@ -36,4 +36,4 @@
 
 5. Let's place a limit order
 
-    <img width="562" alt="examp" src="https://github.com/user-attachments/assets/106aec56-8eb4-4b80-8c1f-526a675028b3" />
+    <img width="562" alt="examp" src="./2.png" />
