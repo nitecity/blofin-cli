@@ -29,7 +29,7 @@ def run():
     print('\nPick One of The Options Below:\n')
 
     try:
-        prompt = input("1. Place Order\n2. Get pending Orders\n3. Get Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API info\n11. Modify API info\n12. Get Balance\n13. Trade History\n\n> ")
+        prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n\n> ")
     except:
         print("\nOperation cancelled by user")
         return
