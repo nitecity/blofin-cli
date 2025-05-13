@@ -86,7 +86,7 @@ def run():
             sl = input("SL: (Optional)\n> ").strip()
             try:
                 if sl:
-                    sl = float(tp)
+                    sl = float(sl)
                     if sl == 0:
                         print("SL Must be greater than 0")
                         return
