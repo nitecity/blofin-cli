@@ -523,12 +523,12 @@ class Blofin:
             data = response.json()
             if data['code'] == "0":
                 info = data['data']['details'][0]
-                print('\n#####################################')
+                print('\n################## Balance ##################')
                 print(f'Currency:        {info['currency']}')
                 print(f'Total Equity:    {round(float(info['equity']), 2)}')
                 print(f'Available:       {round(float(info['available']), 2)}')
                 print(f'Isolated Equity: {round(float(info['isolatedEquity']), 2)}')
-                print('#####################################\n')
+                print('#############################################\n')
                 return round(float(info['available']), 2)
             else:
                 print(f'\nError Code: {data['code']}')
@@ -693,39 +693,40 @@ class Blofin:
     def calculate_size(self, size, position_side, order_type, price=None):
         balance = self.check_balance()
         [contract_value, min_size] = self.contract_info()
-        size_in_usdt = (balance * size) / 100
+        size_in_usdt = round((balance * size) / 100 , 2)
         leverage_multiplier = self.leverage(position_side)
         size_with_leverage = (size_in_usdt * leverage_multiplier)
         text = lambda x: print(f"Size: {x} Contract(s)")
+
+        if price is None:
+            price = self.get_market_price()[0]
+
+        each_contract_in_usdt = (contract_value * price)
+        print(f"{size}% of Balance: {size_in_usdt} USDT")
+
+        if min_size == '1' or order_type == "trigger":
+            size_in_contract = math.floor(size_with_leverage / each_contract_in_usdt)
+            text(size_in_contract)
+            return [size_in_contract, price, size_with_leverage]
         
+        elif min_size == '0.1':
+            size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
+            text(size_in_contract)
+            return [size_in_contract, price, size_with_leverage]
+            
+
+        elif min_size == '0.01':
+            size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
+            text(size_in_contract)
+            return [size_in_contract, price, size_with_leverage]
+        
+    ########################################## Info ##############################################
+
+    def print_info():
         print('********************************************* IMPORTANT **********************************************************')
         print("If the order size looks less than entered, don't worry!\nSize calculation in Blofin is a little tricky!")
         print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
         print("There is more! For trigger orders, contract size must be a whole number. 0.5 is not acceptable. Must be 1, 2, 3...")
         print('******************************************************************************************************************\n')
-
-        if price is None:
-            price = self.get_market_price()[0]
-        if price == 0:
-            print("Error in getting market price")
-            return 0
-        each_contract_in_usdt = (contract_value * price)
-        print(f"{size}% of Balance: {round(size_in_usdt, 2)} USDT")
-
-        if min_size == '1' or order_type == "trigger":
-            true_size = math.floor(size_with_leverage / each_contract_in_usdt)
-            text(true_size)
-            return true_size
-        
-        elif min_size == '0.1':
-            true_size = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
-            text(true_size)
-            return (true_size)
-            
-
-        elif min_size == '0.01':
-            true_size = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
-            text(true_size)
-            return (true_size)
 
 

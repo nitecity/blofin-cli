@@ -46,7 +46,7 @@ def run():
             if not b.get_market_price()[1]:
                 print("Invalid Symbol")
                 return
-            order_type = input("Order Type? [limit] | [market] | [trigger] | [post_only]\n> ").lower().strip()
+            order_type = input("Order Type: [limit] | [market] | [trigger] | [post_only]\n> ").lower().strip()
             if not order_type in valid_order_types:
                 print('Invalid Order Type')
                 return
@@ -54,30 +54,30 @@ def run():
             if not position_side in valid_position_sides:
                 print('Invalid Position Side')
                 return
-            size = input('Size (%)? Example: [100] means "100%" of your balance\n> ').strip()
+            size = input('Size (%): Example: [100] means "100%" of your balance\n> ').strip()
             try:
                 size = float(size)
                 if size < 1 or size > 100:
                     print('Size Must be 1-100')
                     return
             except ValueError:
-                print("Size must be digit")
+                print("Size is mandatory and must be digit")
                 return
             price = input("Price:\n> ").lower().strip() if not order_type == 'market' else print("Order Type: market")
             try:
-                if price:
+                if order_type != 'market':
                     price = float(price)
-                    if price == 0:
+                    if price <= 0:
                         print("Price Must be greater than 0")
                         return
             except ValueError:
-                print("Price must be digit")
+                print("Price is mandatory and must be digit")
                 return
             tp = input("TP: (Optional)\n> ").strip()
             try:
                 if tp:
                     tp = float(tp)
-                    if tp == 0:
+                    if tp <= 0:
                         print("TP Must be greater than 0")
                         return
             except ValueError:
@@ -87,7 +87,7 @@ def run():
             try:
                 if sl:
                     sl = float(sl)
-                    if sl == 0:
+                    if sl <= 0:
                         print("SL Must be greater than 0")
                         return
             except ValueError:
@@ -97,18 +97,73 @@ def run():
             print("\nOperation cancelled by user")
             return
 
+        print('Please Wait...\n')
+
+        [size_in_contract, markPrice, size_with_leverage] = b.calculate_size(size, position_side, order_type, price)
+
+        cal_tp = None
+        cal_sl = None
+        tp_in_usdt = None
+        sl_in_usdt = None
+        long_tp_sl = lambda x,y: round(((x - y) / y) * 100 , 2)
+        short_tp_sl = lambda y,x: round(((y - x) / y) * 100 , 2)
+        # long
+        if position_side == "long":
+            if price and tp and sl:
+                cal_tp = long_tp_sl(tp, price)
+                cal_sl = long_tp_sl(sl, price)
+            elif price and tp:
+                cal_tp = long_tp_sl(tp, price)
+            elif price and sl:
+                cal_sl = long_tp_sl(sl, price)
+            elif tp and sl:
+                cal_tp = long_tp_sl(tp, markPrice)
+                cal_sl = long_tp_sl(sl, markPrice)
+            elif tp:
+                cal_tp = long_tp_sl(tp, markPrice)
+            elif sl:
+                cal_sl = long_tp_sl(sl, markPrice)
+        # short
+        else:
+            if price and tp and sl:
+                cal_tp = short_tp_sl(price, tp)
+                cal_sl = short_tp_sl(price, sl)
+            elif price and tp:
+                cal_tp = short_tp_sl(price, tp)
+            elif price and sl:
+                cal_sl = short_tp_sl(price, sl)
+            elif tp and sl:
+                cal_tp = short_tp_sl(markPrice, tp)
+                cal_sl = short_tp_sl(markPrice, sl)
+            elif tp:
+                cal_tp = short_tp_sl(markPrice, tp)
+            elif sl:
+                cal_sl = short_tp_sl(markPrice, sl)
+
+        if cal_tp:
+            tp_in_usdt = round((size_with_leverage * cal_tp) / 100, 2)
+        if cal_sl:
+            sl_in_usdt = round((size_with_leverage * cal_sl) / 100 , 2)
+            
+        
+
         print("\nOrder Information:")
-        print(f'\nPair:          "{symbol}-USDT"')
-        print(f'Position Side: "{position_side}"')
-        print(f'Order type:    "{order_type}"')
-        print(f'Size:          "{size}%"')
-        if not order_type == "market":
-            print(f'Price:         "{price}"')
-        print(f'TP:            "{tp}"')
-        print(f'SL:            "{sl}"\n')
+        print(f'\nPair:               "{symbol}-USDT"')
+        print(f'Position Side:      "{position_side}"')
+        print(f'Order type:         "{order_type}"')
+        print(f'Size with Leverage: "{size_with_leverage} USDT"')
+        if order_type == "market":
+            print(f'Price:              "{markPrice}"')
+        else:
+            print(f'Price:              "{price}"')
+        if cal_tp:
+            print(f'TP:                 "{tp}" => "{cal_tp}%" = "{tp_in_usdt} USDT"')
+        if cal_sl:
+            print(f'SL:                 "{sl}" => "{cal_sl}%" = "{sl_in_usdt} USDT"\n')
+        
 
         try:
-            sure = input("\nAre You Sure? Default is yes [y/n]\n> ").lower().strip()
+            sure = input("\nDo you confirm above data? [y/n]\n> ").lower().strip()
         except:
             print("\nOperation cancelled by user")
             return
@@ -116,29 +171,25 @@ def run():
             print('Ok, see you later!')
             return
 
-        
-        
-        size = b.calculate_size(size, position_side, order_type, price)
-
         if position_side == 'long':
             if order_type == 'limit':
-                b.place_normal_order("long", "buy", "limit", size, tp, sl, price)
+                b.place_normal_order("long", "buy", "limit", size_in_contract, tp, sl, price)
             elif order_type == "post_only":
-                b.place_normal_order("long", "buy", "post_only", size, tp, sl, price)
+                b.place_normal_order("long", "buy", "post_only", size_in_contract, tp, sl, price)
             elif order_type == 'market':
-                b.place_normal_order("long", "buy", "market", size, tp, sl)
+                b.place_normal_order("long", "buy", "market", size_in_contract, tp, sl)
             elif order_type == 'trigger':
-                b.place_trigger_order("long", "buy", size, tp, sl, price)
+                b.place_trigger_order("long", "buy", size_in_contract, tp, sl, price)
     
         if position_side == "short":
             if order_type == 'limit':
-                b.place_normal_order("short", "sell", "limit", size, tp, sl, price)
+                b.place_normal_order("short", "sell", "limit", size_in_contract, tp, sl, price)
             elif order_type == "post_only":
-                b.place_normal_order("short", "sell", "post_only", size, tp, sl, price)
+                b.place_normal_order("short", "sell", "post_only", size_in_contract, tp, sl, price)
             elif order_type == 'market':
-                b.place_normal_order("short", "sell", "market", size, tp, sl)
+                b.place_normal_order("short", "sell", "market", size_in_contract, tp, sl)
             elif order_type == 'trigger':
-                b.place_trigger_order("short", "sell", size, tp, sl, price)
+                b.place_trigger_order("short", "sell", size_in_contract, tp, sl, price)
 
     elif prompt == "2":
         b = Blofin()
