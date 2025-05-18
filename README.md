@@ -1,4 +1,4 @@
-## Interact With Your Account Via Terminal
+## Interact With Your Trading Account Via Terminal
 
 ### This script only works with [Blofin Exchange](https://blofin.com)
 #### Use this script and you don't have to login to your account everytime!
