@@ -273,60 +273,61 @@ class Blofin:
 
     ####################################### CANCEL ORDER #######################################
 
-    def cancel_order(self, id):
-        if len(id) >= 13:
-            path = "/api/v1/trade/cancel-order"
-            body = { "orderId": id }
-        else:
-            path = "/api/v1/trade/cancel-algo"
-            body = { "algoId": id }
-        
-        method = "POST"
-        timestamp = int(round(time.time() * 1000))
-        nonce = str(uuid.uuid4())
-
-        try:
-            h = self.__gen_signature(path, method, timestamp, nonce, body)
-            response = requests.request(method, self.url+path, headers=h, json=body)
-            data = response.json()
-            
-            if data['code'] == "0":
-                # trigger/algo
-                if len(id) < 13:
-                    if data['data']['code'] == "0":
-                        print(f"Trigger Order with ID {id} has been Canceled")
-                        with open('order_ids.txt', 'r') as file:
-                            lines = file.readlines()
-                        with open('order_ids.txt', 'w') as file:
-                            for line in lines:
-                                if line != id+"\n":
-                                    file.write(line)
-                    else:
-                        print(f"Error Code: {data['data']['code']}")
-                        print(f'Error Message: "{data['data']['msg']}"')
-                # normal
-                else:
-                    if data['data'][0]['code'] == "0":
-                        print(f"Order with ID {id} has been Canceled")
-                        with open('order_ids.txt', 'r') as file:
-                            lines = file.readlines()
-                        with open('order_ids.txt', 'w') as file:
-                            for line in lines:
-                                if line != id+"\n":
-                                    file.write(line)
-                    else:
-                        print('Error:')
-                        print(data)
+    def cancel_order(self, ids):
+        for id in ids:
+            if len(id) >= 13:
+                path = "/api/v1/trade/cancel-order"
+                body = { "orderId": id }
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: "{data['msg']}"')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                path = "/api/v1/trade/cancel-algo"
+                body = { "algoId": id }
             
-        except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
-        except Exception as err:
-            print(f'Other error occurred: {err}')
+            method = "POST"
+            timestamp = int(round(time.time() * 1000))
+            nonce = str(uuid.uuid4())
+
+            try:
+                h = self.__gen_signature(path, method, timestamp, nonce, body)
+                response = requests.request(method, self.url+path, headers=h, json=body)
+                data = response.json()
+                
+                if data['code'] == "0":
+                    # trigger/algo
+                    if len(id) < 13:
+                        if data['data']['code'] == "0":
+                            print(f"Trigger Order with ID {id} has been Canceled")
+                            with open('order_ids.txt', 'r') as file:
+                                lines = file.readlines()
+                            with open('order_ids.txt', 'w') as file:
+                                for line in lines:
+                                    if line != id+"\n":
+                                        file.write(line)
+                        else:
+                            print(f"Error Code: {data['data']['code']}")
+                            print(f'Error Message: "{data['data']['msg']}"')
+                    # normal
+                    else:
+                        if data['data'][0]['code'] == "0":
+                            print(f"Order with ID {id} has been Canceled")
+                            with open('order_ids.txt', 'r') as file:
+                                lines = file.readlines()
+                            with open('order_ids.txt', 'w') as file:
+                                for line in lines:
+                                    if line != id+"\n":
+                                        file.write(line)
+                        else:
+                            print('Error:')
+                            print(data)
+                else:
+                    print(f'\nError Code: {data['code']}')
+                    print(f'Error Message: "{data['msg']}"')
+                    print('Please refer to the docs:')
+                    print('https://docs.blofin.com/index.html#errors\n')
+                
+            except requests.exceptions.HTTPError as http_err:
+                print(f'HTTP error occurred: {http_err}')
+            except Exception as err:
+                print(f'Other error occurred: {err}')
 
     ##################################### CLOSE POSITIONS ######################################
 
