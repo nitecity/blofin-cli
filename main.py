@@ -37,8 +37,7 @@ def run():
         return
     if prompt == "1":
         try:
-            valid_order_types = ['limit', 'market', 'trigger', 'post_only']
-            valid_position_sides = ['long', 'short']
+            valid_inputs = ['1', '2', '3', '4']
             price = None
 
             symbol = input('Enter Symbol\nExample: [btc] | [eth]\n> ').upper().strip()
@@ -46,13 +45,13 @@ def run():
             if not b.get_market_price()[1]:
                 print("Invalid Symbol")
                 return
-            order_type = input("Order Type: [limit] | [market] | [trigger] | [post_only]\n> ").lower().strip()
-            if not order_type in valid_order_types:
-                print('Invalid Order Type')
+            order_type = input("Order Type:\n1. limit\n2. market\n3. trigger\n4. post_only\n> ").lower().strip()
+            if not order_type in valid_inputs:
+                print('Invalid Input')
                 return
-            position_side = input("[long] | [short]:\n> ").lower().strip()
-            if not position_side in valid_position_sides:
-                print('Invalid Position Side')
+            position_side = input("Position Side:\n1. long\n2. short\n> ").lower().strip()
+            if not position_side in valid_inputs[:2]:
+                print('Invalid Input')
                 return
             size = input('Size (%): Example: [100] means "100%" of your balance\n> ').strip()
             try:
@@ -99,7 +98,20 @@ def run():
 
         print('Please Wait...\n')
 
-        [size_in_contract, markPrice, size_with_leverage] = b.calculate_size(size, position_side, order_type, price)
+        if position_side == '1':
+            position_side = 'long'
+        else:
+            position_side = 'short'
+        
+        order_type_map = {
+            '1': 'limit',
+            '2': 'market',
+            '3': 'trigger',
+            '4': 'post_only'
+        }
+        order_type = order_type_map.get(order_type)
+
+        [size_in_contract, markPrice, size_with_leverage, lvg] = b.calculate_size(size, position_side, order_type, price)
 
         cal_tp = None
         cal_sl = None
@@ -151,6 +163,7 @@ def run():
         print(f'\nPair:               "{symbol}-USDT"')
         print(f'Position Side:      "{position_side}"')
         print(f'Order type:         "{order_type}"')
+        print(f'Leverage:           "{lvg}x"')
         print(f'Size with Leverage: "{size_with_leverage} USDT"')
         if order_type == "market":
             print(f'Price:              "{markPrice}"')

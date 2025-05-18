@@ -707,18 +707,18 @@ class Blofin:
         if min_size == '1' or order_type == "trigger":
             size_in_contract = math.floor(size_with_leverage / each_contract_in_usdt)
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage]
+            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
         
         elif min_size == '0.1':
             size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage]
+            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
             
 
         elif min_size == '0.01':
             size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage]
+            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
         
     ########################################## Info ##############################################
 
