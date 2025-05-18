@@ -30,7 +30,7 @@
        python3 main.py
    ```
 
-4. After storing your API Keys, You'll see these options:
+4. After storing your ``API Keys``, You'll see these options:
 
     <img width="689" alt="examp1" src="./imgs/1.png" />
 
