@@ -176,7 +176,7 @@ def run():
         
 
         try:
-            sure = input("\nDo you confirm above data? [y/n]\n> ").lower().strip()
+            sure = input("\nDo you confirm? [y/n]\n> ").lower().strip()
         except:
             print("\nOperation cancelled by user")
             return

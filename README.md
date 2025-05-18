@@ -35,5 +35,6 @@
     <img width="689" alt="examp1" src="./imgs/1.png" />
 
 5. Let's place a limit order
-
+    <i>Look at the inputs</i>
     <img width="562" alt="examp2" src="./imgs/2.png" />
+    <img width="562" alt="examp3" src="./imgs/3.png" />
