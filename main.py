@@ -62,7 +62,7 @@ def run():
             except ValueError:
                 print("Size is mandatory and must be digit")
                 return
-            price = input("Price:\n> ").lower().strip() if not order_type == 'market' else print("Order Type: market")
+            price = input("Price:\n> ").lower().strip() if not order_type == '2' else print("Order Type: market")
             try:
                 if order_type != 'market':
                     price = float(price)
