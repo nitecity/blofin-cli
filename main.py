@@ -372,14 +372,12 @@ def run():
             return
 
         b = Blofin()
-        if symbol and limit:
-            b.get_trade_history(limit, symbol)
-        elif symbol:
-            b.get_trade_history(symbol=symbol)
-        elif limit:
-            b.get_trade_history(limit)
-        else:
-            b.get_trade_history()
+        kwargs = {}
+        if symbol:
+            kwargs['symbol'] = symbol
+        if limit:
+            kwargs['limit'] = limit
+        b.get_trade_history(**kwargs)
 
     else:
         print("\nInvalid input! Enter a number between 1-13\n")
