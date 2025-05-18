@@ -221,13 +221,17 @@ def run():
             with open(order_ids, 'r') as file:
                 contents = file.read()
                 print(contents)
-            order_type = input("\nOrder Type? [limit] | [trigger] | [post_only]\n> ").lower().strip()
             id = input("Enter ID\n> ").strip()
+            if not id.isdigit():
+                print('Order Id is mandatory and must be digit')
+                return
+                
         except:
             print("\nOperation cancelled by user")
             return
+
         b = Blofin()
-        b.cancel_order(order_type, id)
+        b.cancel_order(id)
 
     elif prompt == "5":
 

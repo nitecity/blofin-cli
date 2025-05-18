@@ -273,13 +273,13 @@ class Blofin:
 
     ####################################### CANCEL ORDER #######################################
 
-    def cancel_order(self, order_type, id):
-        if order_type == "trigger" or order_type == "t":
-            path = "/api/v1/trade/cancel-algo"
-            body = { "algoId": id }
-        else:
+    def cancel_order(self, id):
+        if len(id) >= 13:
             path = "/api/v1/trade/cancel-order"
             body = { "orderId": id }
+        else:
+            path = "/api/v1/trade/cancel-algo"
+            body = { "algoId": id }
         
         method = "POST"
         timestamp = int(round(time.time() * 1000))
@@ -291,7 +291,8 @@ class Blofin:
             data = response.json()
             
             if data['code'] == "0":
-                if order_type == "trigger":
+                # trigger/algo
+                if len(id) < 13:
                     if data['data']['code'] == "0":
                         print(f"Trigger Order with ID {id} has been Canceled")
                         with open('order_ids.txt', 'r') as file:
@@ -303,7 +304,7 @@ class Blofin:
                     else:
                         print(f"Error Code: {data['data']['code']}")
                         print(f'Error Message: "{data['data']['msg']}"')
-
+                # normal
                 else:
                     if data['data'][0]['code'] == "0":
                         print(f"Order with ID {id} has been Canceled")
