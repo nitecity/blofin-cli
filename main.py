@@ -221,7 +221,7 @@ def run():
             with open(order_ids, 'r') as file:
                 contents = file.read()
                 print(contents)
-            id = input("Enter ID (if there are more than one, simpley use ',') e,g '61404050, 61391100'\n> ").strip()
+            id = input("Enter ID (if you want to cancel more than one order, simpley use ',') e,g '61404050, 61391100'\n> ").strip()
             ids = id.split(',')
             for i in range(len(ids)):
                 ids[i] = ids[i].strip()
