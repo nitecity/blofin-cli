@@ -239,13 +239,23 @@ def run():
     elif prompt == "5":
 
         try:
+            valid_inputs = ['1', '2']
             symbol = input("\nEnter Symbol: e.g \"btc\"\n> ").upper().strip()
-            positionSide = input("Position Side: [Long] | [Short]\n> ").lower().strip()
+            position_side = input("Position Side:\n1. Long\n2. Short\n> ").lower().strip()
+            if not position_side in valid_inputs:
+                print('Invalid Input!')
+                return
         except:
             print("\nOperation cancelled by user")
             return
+        
+        position_side_map = {
+            '1': 'long',
+            '2': 'short'
+        }
+        position_side = position_side_map.get(position_side)
         b = Blofin(symbol+"-USDT")
-        b.close_position(positionSide)
+        b.close_position(position_side)
     
     elif prompt == "6":
 

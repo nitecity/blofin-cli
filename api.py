@@ -331,7 +331,7 @@ class Blofin:
 
     ##################################### CLOSE POSITIONS ######################################
 
-    def close_position(self, positionSide):
+    def close_position(self, position_side):
         path = "/api/v1/trade/close-position"
         method = "POST"
         timestamp = int(round(time.time() * 1000))
@@ -340,7 +340,7 @@ class Blofin:
         body = {
             "instId":self.symbol,
             "marginMode":self.get_margin_mode(True),
-            "positionSide":positionSide,
+            "positionSide":position_side
         }
 
         try:
@@ -348,7 +348,7 @@ class Blofin:
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if data['code'] == "0":
-                if positionSide == "long":
+                if position_side == "long":
                     print(f"\n{self.symbol}; Long Position Closed\n")
                 else:
                     print(f"\n{self.symbol}; Short Position Closed\n")
