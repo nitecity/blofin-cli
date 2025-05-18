@@ -38,3 +38,5 @@
     <p><i>Look at the inputs</i></p>
     <img width="562" alt="examp2" src="./imgs/2.png" />
     <img width="562" alt="examp3" src="./imgs/3.png" />
+
+<p><i>TP-SL calculation is approximate</i></p>
