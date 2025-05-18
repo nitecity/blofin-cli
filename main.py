@@ -64,7 +64,7 @@ def run():
                 return
             price = input("Price:\n> ").lower().strip() if not order_type == '2' else print("Order Type: market")
             try:
-                if order_type != 'market':
+                if order_type != '2':
                     price = float(price)
                     if price <= 0:
                         print("Price Must be greater than 0")
