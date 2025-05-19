@@ -18,6 +18,7 @@ class Blofin:
         self.api_key = os.getenv("API_KEY")
         self.secret = os.getenv("SECRET")
         self.url = "https://openapi.blofin.com"
+        # demo url: https://demo-trading-openapi.blofin.com
         self.passphrase = os.getenv("PASSPHRASE")
 
     ################################ GENERATE SIGNATURE ################################
@@ -331,37 +332,45 @@ class Blofin:
 
     ##################################### CLOSE POSITIONS ######################################
 
-    def close_position(self, position_side):
-        path = "/api/v1/trade/close-position"
-        method = "POST"
-        timestamp = int(round(time.time() * 1000))
-        nonce = str(uuid.uuid4())
-
-        body = {
-            "instId":self.symbol,
-            "marginMode":self.get_margin_mode(True),
-            "positionSide":position_side
-        }
-
-        try:
-            h = self.__gen_signature(path, method, timestamp, nonce, body)
-            response = requests.request(method, self.url+path, headers=h, json=body)
-            data = response.json()
-            if data['code'] == "0":
-                if position_side == "long":
-                    print(f"\n{self.symbol}; Long Position Closed\n")
+    def close_position(self, position_side='', isAll=False):
+        def _close_single_position(inst_id, pos_side):
+            path = "/api/v1/trade/close-position"
+            method = "POST"
+            timestamp = int(round(time.time() * 1000))
+            nonce = str(uuid.uuid4())
+            body = {
+                "instId": inst_id,
+                "marginMode": self.get_margin_mode(True),
+                "positionSide": pos_side
+            }
+            try:
+                h = self.__gen_signature(path, method, timestamp, nonce, body)
+                response = requests.request(method, self.url + path, headers=h, json=body)
+                data = response.json()
+                if data['code'] == "0":
+                    print(f"\n{inst_id}; {pos_side.capitalize()} Position Closed\n")
                 else:
-                    print(f"\n{self.symbol}; Short Position Closed\n")
-            else:
-                print(f"\nError Code: {data['code']}")
-                print(f'Error Message: "{data['msg']}"')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
-            
-        except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
-        except Exception as err:
-            print(f'Other error occurred: {err}')
+                    print(f"\nError Code: {data['code']}")
+                    print(f'Error Message: "{data["msg"]}"')
+                    print('Please refer to the docs:')
+                    print('https://docs.blofin.com/index.html#errors\n')
+            except requests.exceptions.HTTPError as http_err:
+                print(f'HTTP error occurred: {http_err}')
+            except Exception as err:
+                print(f'Other error occurred: {err}')
+
+        
+
+        open_positions = self.get_open_positions(True)
+        if not open_positions:
+            print('There Are No Open Positions!')
+            return
+
+        if isAll:
+            for item in open_positions:
+                _close_single_position(item['intId'], item['positionSide'])
+        else:
+            _close_single_position(self.symbol, position_side)
 
     ################################ GET OPEN TRIGGER ORDERS ###################################
 
@@ -469,7 +478,7 @@ class Blofin:
     
     #################################### GET OPEN POSITIONS ####################################
 
-    def get_open_positions(self):
+    def get_open_positions(self, fromInside=False):
         method = "GET"
         path = "/api/v1/account/positions"
         nonce = str(uuid.uuid4())
@@ -481,24 +490,31 @@ class Blofin:
             if data['code'] == "0":
                 info = data['data']
                 if info:
+                    list_to_return = []
                     print(f'{len(info)} Open Position(s)')
                     for item in info:
-                        print(f'\n#####################################')
-                        print(f'Symbol:         {item['instId']}')
-                        print(f'Position Id:    {item['positionId']}')
-                        print(f'Margin Mode:    {item['marginMode']}')
-                        print(f'Position Side:  {item['positionSide']}')
-                        print(f'Size:           {item['positions']} Contract(s)')
-                        print(f'Leverage        {item['leverage']}x')
-                        print(f'Price:          {item['averagePrice']}')
-                        print(f'Market Price:   {item['markPrice']}')
-                        print(f'Margin:         {item['margin']}')
-                        print(f'Liq Price:      {item['liquidationPrice']}')
-                        print(f'Unrealized PNL: {item['unrealizedPnl']}')
-                        print(f'Time:           {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
-                        print(f'#####################################\n')
+                        if fromInside:
+                            list_to_return.append({'intId': item['instId'], 'positionSide': item['positionSide']})
+                        else:
+                            print(f'\n#####################################')
+                            print(f'Symbol:         {item['instId']}')
+                            print(f'Position Id:    {item['positionId']}')
+                            print(f'Margin Mode:    {item['marginMode']}')
+                            print(f'Position Side:  {item['positionSide']}')
+                            print(f'Size:           {item['positions']} Contract(s)')
+                            print(f'Leverage        {item['leverage']}x')
+                            print(f'Price:          {item['averagePrice']}')
+                            print(f'Market Price:   {item['markPrice']}')
+                            print(f'Margin:         {item['margin']}')
+                            print(f'Liq Price:      {item['liquidationPrice']}')
+                            print(f'Unrealized PNL: {item['unrealizedPnl']}')
+                            print(f'Time:           {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
+                            print(f'#####################################\n')
+                    
+                    return list_to_return
                 else:
-                    print('0 Open Positions')   
+                    print('0 Open Positions')
+                    return []
 
             else:
                 print(f'\nError Code: {data['code']}')
