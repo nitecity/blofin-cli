@@ -29,7 +29,7 @@ def run():
     print('\nPick One of The Options Below:\n')
 
     try:
-        prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n0. Exit\n\n> ")
+        prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n14. Info About Size\n0. Exit\n\n> ")
     except:
         print("\nOperation cancelled by user")
         return
@@ -319,16 +319,26 @@ def run():
     elif prompt == "9":
 
         try:
-            marginMode = input("\nMargin Mode: [isolated] | [cross]\n> ").lower().strip()
+            valid_inputs = ['1', '2']
+            marginMode = input("\nMargin Mode:\n1. Isolated\n2. Cross\n> ").strip()
+            if not marginMode in valid_inputs:
+                print('Invalid Input!')
+                return
         except:
             print("\nOperation cancelled by user")
             return
+        
+        marginMode_map = {
+            '1': 'isolated',
+            '2': 'cross'
+        }
+        marginMode = marginMode_map.get(marginMode)
         b = Blofin()
         b.set_margin_mode(marginMode)
 
     elif prompt == "10":
 
-        with open('.env', 'r') as file:
+        with open(envfile, 'r') as file:
                 contents = file.read()
                 print(contents)
 
@@ -416,6 +426,8 @@ def run():
         try:
             symbol = input('\nEnter symbol: [Default: All symbols]\n> ')
             limit = input('How many trades: [Default: 10]\n> ')
+            if not limit.isdigit():
+                print('Limit value must be digit')
         except:
             print("\nOperation cancelled by user")
             return
@@ -428,8 +440,13 @@ def run():
             kwargs['limit'] = limit
         b.get_trade_history(**kwargs)
 
+    elif prompt == '14':
+
+        b = Blofin()
+        b.print_info()
+
     else:
-        print("\nInvalid input! Enter a number between 1-13\n")
+        print("\nInvalid input! Enter a number between 1-14\n")
 
 
 run()

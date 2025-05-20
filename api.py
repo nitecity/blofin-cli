@@ -723,7 +723,7 @@ class Blofin:
         
     ########################################## Info ##############################################
 
-    def print_info():
+    def print_info(self):
         print('********************************************* IMPORTANT **********************************************************')
         print("If the actual order size in the website shows less than entered, don't worry!\nSize calculation in Blofin API is a little tricky!")
         print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
