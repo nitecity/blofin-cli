@@ -270,12 +270,17 @@ def run():
     elif prompt == "6":
 
         try:
-            symbols = input('\nEnter symbols:\n Example: "btc,eth"\n> ')
+            symbol = input("\nEnter symbol(s):\nFor more than one, simply add ',' e,g. \"btc,eth\"\n> ").strip()
+            symbols = symbol.split(',')
+            for i in range(len(symbols)):
+                symbols[i] = symbols[i].strip()
+            modified_words = [element + '-usdt' for element in symbols]
+            modified_symbols = ','.join(modified_words)
         except:
             print("\nOperation cancelled by user")
             return
         b = Blofin()
-        b.get_leverage(symbols)
+        b.get_leverage(modified_symbols)
 
     elif prompt == "7":
 

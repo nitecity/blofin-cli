@@ -103,10 +103,7 @@ class Blofin:
     ########################################## GET LEVERAGE ####################################
 
     def get_leverage(self, symbols):
-        words = symbols.split(',')
-        modified_words = [element + '-usdt' for element in words]
-        modified_symbols = ','.join(modified_words)
-        path = f"/api/v1/account/batch-leverage-info?instId={modified_symbols}&marginMode={self.get_margin_mode(True)}"
+        path = f"/api/v1/account/batch-leverage-info?instId={symbols}&marginMode={self.get_margin_mode(True)}"
         method = "GET"
         nonce = str(uuid.uuid4())
         timestamp = int(round(time.time() * 1000))
@@ -119,11 +116,11 @@ class Blofin:
                 info = data['data']
                 i = 0
                 while( i<len(info) -1 ):
-                    print('\n#####################################')
+                    print('\n#####################')
                     print(f'Symbol: {info[i]['instId']}')
                     print(f'Long;  Leverage: {info[i]['leverage']}x')
                     print(f'Short; Leverage: {info[i+1]['leverage']}x')
-                    print('#####################################\n')
+                    print('#####################\n')
 
                     i+=2
 
