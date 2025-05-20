@@ -285,14 +285,31 @@ def run():
     elif prompt == "7":
 
         try:
+            valid_inputs = ['1', '2', '3']
             symbol = input("\nEnter Symbol: e.g \"btc\"\n> ").upper().strip()
-            leverage = input("Leverage:\n> e.g. \"5\"").lower().strip()
-            positionSide = input("Position Side: [Long] | [Short] | [Both]\n> ").lower().strip()
+            if not symbol:
+                print('Symbol is mandatory')
+                return
+            leverage = input("Leverage:\n> ").strip()
+            if not leverage or not leverage.isdigit():
+                print('Leverage is mandatory and must be digit')
+                return
+            position_side = input("Position Side:\n1. Long\n2. Short\n3. Both\n> ").strip()
+            if not position_side in valid_inputs:
+                print('Invalid Input!')
+                return
         except:
             print("\nOperation cancelled by user")
             return
+
+        position_side_map = {
+            '1': 'long',
+            '2': 'short',
+            '3': 'both'
+        }
+        position_side = position_side_map.get(position_side)
         b = Blofin(symbol+"-USDT")
-        b.set_leverage(leverage, positionSide)
+        b.set_leverage(leverage, position_side)
 
     elif prompt == "8":
 

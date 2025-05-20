@@ -41,20 +41,11 @@ class Blofin:
     ################################# SET LEVERAGE #####################################
 
     def set_leverage(self, leverage, positionSide):
-        method = "POST"
-        path = "/api/v1/account/set-leverage"
-        body = {
-            "instId":self.symbol,
-            "leverage":leverage,
-            "marginMode":self.get_margin_mode(True),
-            "positionSide":positionSide
-        }
-
         def ok(pside):
             print('\n#####################################')
             print('Set Leverage Successfully')
             print(f'Symbol:        {self.symbol}')
-            print(f'Leverage       {leverage}') 
+            print(f'Leverage       {leverage}x') 
             print(f'Position Side: {pside}\n')
             print('#####################################\n')
 
@@ -64,41 +55,35 @@ class Blofin:
             print('Please refer to the docs:')
             print('https://docs.blofin.com/index.html#errors\n')
 
-        if positionSide == 'both':
-            both = ['long', 'short']
-            for pside in both:
-                try:
-                    nonce = str(uuid.uuid4())
-                    timestamp = int(round(time.time() * 1000))
-                    body['positionSide'] = pside
-                    h = self.__gen_signature(path, method, timestamp, nonce, body)
-                    response = requests.request(method, self.url+path, headers=h, json=body)
-                    data = response.json()
-                    if data['code'] == "0":
-                        ok(pside)
-                    else:
-                        error(data)
-
-                except requests.exceptions.HTTPError as http_err:
-                    print(f'HTTP error occurred: {http_err}')
-                except Exception as err:
-                    print(f'Other error occurred: {err}')
-        else:
-            try:
-                nonce = str(uuid.uuid4())
-                timestamp = int(round(time.time() * 1000))
-                h = self.__gen_signature(path, method, timestamp, nonce, body)
-                response = requests.request(method, self.url+path, headers=h, json=body)
-                data = response.json()
-                if data['code'] == "0":
-                    ok(positionSide)
-                else:
-                    error(data)
-
-            except requests.exceptions.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
-            except Exception as err:
-                print(f'Other error occurred: {err}')
+        def send_request(pside):
+            method = "POST"
+            path = "/api/v1/account/set-leverage"
+            nonce = str(uuid.uuid4())
+            timestamp = int(round(time.time() * 1000))
+            body = {
+                "instId":self.symbol,
+                "leverage":leverage,
+                "marginMode":self.get_margin_mode(True),
+                "positionSide":pside
+            }
+            h = self.__gen_signature(path, method, timestamp, nonce, body)
+            response = requests.request(method, self.url+path, headers=h, json=body)
+            data = response.json()
+            if data['code'] == '0':
+                ok(pside)
+            else:
+                error(data)
+        
+        try:
+            if positionSide == 'both':
+                for pside in ['long', 'short']:
+                    send_request(pside)
+            else:
+                send_request(positionSide)
+        except requests.exceptions.HTTPError as http_err:
+            print(f'Http error occurred: {http_err}')
+        except Exception as err:
+            print(f'Other error occurred: {err}')
     
     ########################################## GET LEVERAGE ####################################
 
