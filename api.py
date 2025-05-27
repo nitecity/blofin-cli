@@ -745,7 +745,8 @@ class Blofin:
                 return True
             else:
                 print(f'\n- Error Code: {data['code']}')
-                print(f'- Message: {data['msg']}\n')
+                print(f'- Message: {data['msg']}')
+                print('Try again\n')
                 return False
         except requests.exceptions.HTTPError as http_err:
             print(f'HTTP error occurred: {http_err}')
