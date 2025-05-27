@@ -704,7 +704,7 @@ class Blofin:
         print(f"{size}% of Balance: {size_in_usdt} USDT")
         print(f'Leverage: {leverage_multiplier}x')
 
-        if min_size == '1' or order_type == "trigger":
+        if min_size == '1':
             size_in_contract = math.floor(size_with_leverage / each_contract_in_usdt)
             text(size_in_contract)
             return [size_in_contract, price, size_with_leverage, leverage_multiplier]
