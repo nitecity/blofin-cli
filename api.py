@@ -734,7 +734,7 @@ class Blofin:
             "ACCESS-SIGN":sign,
             "ACCESS-TIMESTAMP":str(timestamp),
             "ACCESS-NONCE":nonce,
-            "ACCESS-PASSPHRASE":passphrase,
+            "ACCESS-PASSPHRASE":passphrase
         }
 
         try:
