@@ -2,6 +2,7 @@
 # More information: https://openapi.blofin.com/api/v1/market/instruments?instId=op-usdt [This url shows information about OP. Feel free to change it]
 import os
 from dotenv import load_dotenv, set_key
+from api import Blofin
 
 def run():
 
@@ -9,6 +10,7 @@ def run():
     envfile = '.env'
     if not os.path.isfile(envfile):
         try:
+            print('\nBefore we get started, you need to provide the API credentials you got from https://blofin.com/account/apis')
             api_key = input('API Key:\n> ').strip()
             secret = input('Secret Key:\n> ').strip()
             passphrase = input('Passphrase:\n> ').strip()
@@ -16,17 +18,26 @@ def run():
             print("\nOperation cancelled by user")
             return
 
-        with open(envfile, 'w') as f:
-            f.write(f'API_KEY="{api_key}"\n')
-            f.write(f'SECRET="{secret}"\n')
-            f.write(f'PASSPHRASE="{passphrase}"\n')
+        b = Blofin()
+        isValid = b.API_auth(api_key, secret, passphrase)
+        if isValid:
+            with open(envfile, 'w') as f:
+                f.write(f'API_KEY="{api_key}"\n')
+                f.write(f'SECRET="{secret}"\n')
+                f.write(f'PASSPHRASE="{passphrase}"\n')
+            print('\n----------------------------------------')
+            print(f'\nProvided API data is valid')
+            print('Your API data has been stored in ".env"')
+            print('----------------------------------------')
+            
+        else:
+            return
 
-    from api import Blofin
-    print('\n** Welcome **')
+    print('\n************************* Welcome *************************')
     print('You are going to interact with your account in "Blofin.com"')
-    print('***********************************************************')
-    print('\nLet\'s get started!')
-    print('\nPick One of The Options Below:\n')
+    print('Pick One of The Options Below:')
+    print('***********************************************************\n')
+    
 
     try:
         prompt = input("1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n14. Info About Size\n0. Exit\n\n> ")

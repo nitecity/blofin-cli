@@ -10,10 +10,10 @@ import os
 import math
 import datetime
 from dotenv import load_dotenv
-load_dotenv()
 
 class Blofin:
     def __init__(self, symbol=""):
+        load_dotenv()
         self.symbol = symbol
         self.api_key = os.getenv("API_KEY")
         self.secret = os.getenv("SECRET")
@@ -721,6 +721,38 @@ class Blofin:
             text(size_in_contract)
             return [size_in_contract, price, size_with_leverage, leverage_multiplier]
         
+    ##################################### API AUTHENTICATION #####################################
+
+    def API_auth(self, api_key, secret, passphrase):
+        path = '/api/v1/account/margin-mode'
+        method = 'GET'
+        timestamp = int(round(time.time() * 1000))
+        nonce = str(uuid.uuid4())
+        prehash_string = f"{path}{method}{timestamp}{nonce}"
+        sign = base64.b64encode(hmac.new(secret.encode(), prehash_string.encode(), sha256).hexdigest().encode()).decode()
+        headers = {
+            "ACCESS-KEY":api_key,
+            "ACCESS-SIGN":sign,
+            "ACCESS-TIMESTAMP":str(timestamp),
+            "ACCESS-NONCE":nonce,
+            "ACCESS-PASSPHRASE":passphrase,
+        }
+
+        try:
+            response = requests.request(method, self.url+path, headers=headers)
+            data = response.json()
+            
+            if data['code'] == '0':
+                return True
+            else:
+                print(f'\n- Error Code: {data['code']}')
+                print(f'- Message: {data['msg']}\n')
+                return False
+        except requests.exceptions.HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+        except Exception as err:
+            print(f'Other error occurred: {err}')
+        
     ########################################## Info ##############################################
 
     def print_info(self):
@@ -729,5 +761,3 @@ class Blofin:
         print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
         print("There is more! For trigger orders, contract size must be a whole number. 0.5 is not acceptable. Must be 1, 2, 3...")
         print('******************************************************************************************************************\n')
-
-
