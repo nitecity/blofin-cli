@@ -6,10 +6,11 @@
 1. Prerequisites:
     - Creat your API Keys here: [Blofin](https://blofin.com/account/apis)
     - Install [Python](https://www.python.org/downloads/)
-    - Open Terminal and Install ``dotenv`` package:<br><br>
+    - Open Terminal and Install required packages:<br><br>
         ```
           pip install python-dotenv
           pip install requests
+          pip install colorama
         ```
 2. Download The Repo:
 
