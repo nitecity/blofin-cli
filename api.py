@@ -9,6 +9,9 @@ import os
 import math
 import datetime
 from dotenv import load_dotenv
+from colorama import Fore, Style, init
+
+init()
 
 class Blofin:
     def __init__(self, symbol=""):
@@ -41,18 +44,18 @@ class Blofin:
 
     def set_leverage(self, leverage, positionSide):
         def ok(pside):
-            print('\n#####################################')
-            print('Set Leverage Successfully')
-            print(f'Symbol:        {self.symbol}')
-            print(f'Leverage       {leverage}x') 
-            print(f'Position Side: {pside}\n')
-            print('#####################################\n')
+            print(f'{Fore.GREEN}\n#####################################{Style.RESET_ALL}')
+            print(f'{Fore.GREEN}Set Leverage Successfully{Style.RESET_ALL}')
+            print(f'{Fore.GREEN}Symbol:        {self.symbol}{Style.RESET_ALL}')
+            print(f'{Fore.GREEN}Leverage       {leverage}x{Style.RESET_ALL}') 
+            print(f'{Fore.GREEN}Position Side: {pside}\n{Style.RESET_ALL}')
+            print(f'{Fore.GREEN}#####################################\n{Style.RESET_ALL}')
 
         def error(data):
-            print(f'\nError Code: {data['code']}')
-            print(f'Error Message: {data['msg']}')
-            print('Please refer to the docs:')
-            print('https://docs.blofin.com/index.html#errors\n')
+            print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+            print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+            print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+            print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         def send_request(pside):
             method = "POST"
@@ -80,9 +83,9 @@ class Blofin:
             else:
                 send_request(positionSide)
         except requests.exceptions.HTTPError as http_err:
-            print(f'Http error occurred: {http_err}')
+            print(f'{Fore.RED}Http error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
     
     ########################################## GET LEVERAGE ####################################
 
@@ -100,24 +103,24 @@ class Blofin:
                 info = data['data']
                 i = 0
                 while( i<len(info) -1 ):
-                    print('\n#####################')
-                    print(f'Symbol: {info[i]['instId']}')
-                    print(f'Long;  Leverage: {info[i]['leverage']}x')
-                    print(f'Short; Leverage: {info[i+1]['leverage']}x')
-                    print('#####################\n')
+                    print(f'{Fore.CYAN}\n#####################{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Symbol: {info[i]['instId']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Long;  Leverage: {info[i]['leverage']}x{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Short; Leverage: {info[i+1]['leverage']}x{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}#####################\n{Style.RESET_ALL}')
 
                     i+=2
 
             else:
-                print(f'\nError Code:    {data['code']}')
-                print(f'Error Message: "{data['msg']}"')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code:    {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: "{data['msg']}"{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ################################# PLACE TRIGGER ORDER ######################################
 
@@ -154,29 +157,29 @@ class Blofin:
                 if data['data']['code'] == "0":
                     id = data['data']['algoId']
                     if positionSide == "long":
-                        print('\nLong:')
-                        print(f"Order ID: {id}")
-                        print('Order ID saved in "order_ids.txt"\n')
+                        print(f'{Fore.GREEN}\nLong:{Style.RESET_ALL}')
+                        print(f"{Fore.GREEN}Order ID: {id}{Style.RESET_ALL}")
+                        print(f'{Fore.GREEN}Order ID saved in "order_ids.txt"\n{Style.RESET_ALL}')
                         with open('order_ids.txt', 'a') as file:
                             file.write(f"{id}\n")
                     else:
-                        print('\nShort:')
-                        print(f"Order ID: {id}\n")
+                        print(f'{Fore.GREEN}\nShort:{Style.RESET_ALL}')
+                        print(f"{Fore.GREEN}Order ID: {id}\n{Style.RESET_ALL}")
                         with open('order_ids.txt', 'a') as file:
                             file.write(f"{id}\n")
                 else:
-                    print(f'\nError Code: {data['data']['code']}')
-                    print(f'Error Message: "{data['data']['msg']}"\n')
+                    print(f'{Fore.RED}\nError Code: {data['data']['code']}{Style.RESET_ALL}')
+                    print(f'{Fore.RED}Error Message: "{data['data']['msg']}"\n{Style.RESET_ALL}')
             else:
-                print(f"\nError Code: {data['code']}")
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f"{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}")
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ########################### PLACE LIMIT ORDER/TAKE MARKET POSITION #########################
 
@@ -210,48 +213,48 @@ class Blofin:
             if not orderType == "market":
                 if data['code'] == "0":
                     if data['data'][0]['code'] == "0":
-                        print("Success")
+                        print(f"{Fore.GREEN}Success{Style.RESET_ALL}")
                         if positionSide == "long":
-                            print('\nLong Order Placed')
-                            print(f"Order ID: {data['data'][0]['orderId']}")
-                            print("Order ID saved in \"order_ids.txt\"\n")
+                            print(f'{Fore.GREEN}\nLong Order Placed{Style.RESET_ALL}')
+                            print(f"{Fore.GREEN}Order ID: {data['data'][0]['orderId']}{Style.RESET_ALL}")
+                            print(f"{Fore.GREEN}Order ID saved in \"order_ids.txt\"\n{Style.RESET_ALL}")
                             with open('order_ids.txt', 'a') as file:
                                 file.write(f"{data['data'][0]['orderId']}\n")
                         else:
-                            print('\nShort Order Placed')
-                            print(f"Order ID: {data['data'][0]['orderId']}\n")
+                            print(f'{Fore.GREEN}\nShort Order Placed{Style.RESET_ALL}')
+                            print(f"{Fore.GREEN}Order ID: {data['data'][0]['orderId']}\n{Style.RESET_ALL}")
                             with open('order_ids.txt', 'a') as file:
                                 file.write(f"{data['data'][0]['orderId']}\n")
                 else:
                     if data['code'] == "1":
-                        print(f'\nError Code: {data['data'][0]['code']}')
-                        print(f'Error Message: {data['msg']}. {data['data'][0]['msg']}\n')
+                        print(f'{Fore.RED}\nError Code: {data['data'][0]['code']}{Style.RESET_ALL}')
+                        print(f'{Fore.RED}Error Message: {data['msg']}. {data['data'][0]['msg']}\n{Style.RESET_ALL}')
                         
                         
                     else:
-                        print(f'\nError Code: {data['code']}')
-                        print(f'Error Message: {data['msg']}\n')
+                        print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                        print(f'{Fore.RED}Error Message: {data['msg']}\n{Style.RESET_ALL}')
             else:
                 if data['code'] == "0":
                     if data['data'][0]['code'] == "0":
                         if positionSide == "long":
-                            print('\nLong Position Succussfully Taken\n')
+                            print(f'{Fore.GREEN}\nLong Position Succussfully Taken\n{Style.RESET_ALL}')
                         else:
-                            print('\nShort Position Succussfully Taken\n')
+                            print(f'{Fore.GREEN}\nShort Position Succussfully Taken\n{Style.RESET_ALL}')
                 else:
                     if data['code'] == "1":
-                        print(f'Error Code: {data['data'][0]['code']}')
-                        print(f'Error Message: {data['msg']}. {data['data']['msg']}')
+                        print(f'{Fore.RED}Error Code: {data['data'][0]['code']}{Style.RESET_ALL}')
+                        print(f'{Fore.RED}Error Message: {data['msg']}. {data['data']['msg']}{Style.RESET_ALL}')
                     else:
-                        print(f'\nError Code: {data['code']}')
-                        print(f'Error Message: {data['msg']}')
-                        print('Please refer to the docs:')
-                        print('https://docs.blofin.com/index.html#errors\n')
+                        print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                        print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                        print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                        print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ####################################### CANCEL ORDER #######################################
 
@@ -277,7 +280,7 @@ class Blofin:
                     # trigger/algo
                     if len(id) < 13:
                         if data['data']['code'] == "0":
-                            print(f"Trigger Order with ID {id} has been Canceled")
+                            print(f"{Fore.GREEN}Trigger Order with ID {id} has been Canceled{Style.RESET_ALL}")
                             with open('order_ids.txt', 'r') as file:
                                 lines = file.readlines()
                             with open('order_ids.txt', 'w') as file:
@@ -285,12 +288,12 @@ class Blofin:
                                     if line != id+"\n":
                                         file.write(line)
                         else:
-                            print(f"Error Code: {data['data']['code']}")
-                            print(f'Error Message: "{data['data']['msg']}"')
+                            print(f"{Fore.RED}Error Code: {data['data']['code']}{Style.RESET_ALL}")
+                            print(f'{Fore.RED}Error Message: "{data['data']['msg']}"{Style.RESET_ALL}')
                     # normal
                     else:
                         if data['data'][0]['code'] == "0":
-                            print(f"Order with ID {id} has been Canceled")
+                            print(f"{Fore.GREEN}Order with ID {id} has been Canceled{Style.RESET_ALL}")
                             with open('order_ids.txt', 'r') as file:
                                 lines = file.readlines()
                             with open('order_ids.txt', 'w') as file:
@@ -298,18 +301,18 @@ class Blofin:
                                     if line != id+"\n":
                                         file.write(line)
                         else:
-                            print('Error:')
-                            print(data)
+                            print(f'{Fore.RED}Error:{Style.RESET_ALL}')
+                            print(f'{Fore.RED}{data}{Style.RESET_ALL}')
                 else:
-                    print(f'\nError Code: {data['code']}')
-                    print(f'Error Message: "{data['msg']}"')
-                    print('Please refer to the docs:')
-                    print('https://docs.blofin.com/index.html#errors\n')
+                    print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                    print(f'{Fore.RED}Error Message: "{data['msg']}"{Style.RESET_ALL}')
+                    print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                    print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
                 
             except requests.exceptions.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
+                print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
             except Exception as err:
-                print(f'Other error occurred: {err}')
+                print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ##################################### CLOSE POSITIONS ######################################
 
@@ -329,22 +332,22 @@ class Blofin:
                 response = requests.request(method, self.url + path, headers=h, json=body)
                 data = response.json()
                 if data['code'] == "0":
-                    print(f"\n{inst_id}; {pos_side.capitalize()} Position Closed\n")
+                    print(f"{Fore.GREEN}\n{inst_id}; {pos_side.capitalize()} Position Closed\n{Style.RESET_ALL}")
                 else:
-                    print(f"\nError Code: {data['code']}")
-                    print(f'Error Message: "{data["msg"]}"')
-                    print('Please refer to the docs:')
-                    print('https://docs.blofin.com/index.html#errors\n')
+                    print(f"{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}")
+                    print(f'{Fore.RED}Error Message: "{data["msg"]}"{Style.RESET_ALL}')
+                    print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                    print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
             except requests.exceptions.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
+                print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
             except Exception as err:
-                print(f'Other error occurred: {err}')
+                print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
         
 
         open_positions = self.get_open_positions(True)
         if not open_positions:
-            print('There Are No Open Positions!')
+            print(f'{Fore.YELLOW}There Are No Open Positions!{Style.RESET_ALL}')
             return
 
         if isAll:
@@ -367,32 +370,32 @@ class Blofin:
             if data['code'] == "0":
                 info = data['data']
                 if info:
-                    print(f'{len(info)} Pending Trigger Order(s)')
+                    print(f'{Fore.CYAN}{len(info)} Pending Trigger Order(s){Style.RESET_ALL}')
                     for item in info:
-                        print(f'\n#####################################')
-                        print(f'Symbol:        {item['instId']}')
-                        print(f'Algo ID:       {item['algoId']}')
-                        print(f'Size:          {item['size']} Contract(s)')
-                        print(f'Leverage:      {item['leverage']}x')
-                        print(f'Position Side: {item['positionSide']}')
-                        print(f'Trigger Price: {item['triggerPrice']}')
-                        print(f'TP:            {item['attachAlgoOrders'][0]['tpTriggerPrice']}')
-                        print(f'SL:            {item['attachAlgoOrders'][0]['slTriggerPrice']}')
-                        print(f'Margin Mode:   {item['marginMode']}')
-                        print(f'Time:          {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
-                        print(f'#####################################\n')
+                        print(f'{Fore.CYAN}\n###############################################{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Symbol:        {item['instId']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Algo ID:       {item['algoId']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Size:          {item['size']} Contract(s){Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Leverage:      {item['leverage']}x{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Position Side: {item['positionSide']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Trigger Price: {item['triggerPrice']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}TP:            {item['attachAlgoOrders'][0]['tpTriggerPrice']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}SL:            {item['attachAlgoOrders'][0]['slTriggerPrice']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Margin Mode:   {item['marginMode']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Time:          {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}###############################################\n{Style.RESET_ALL}')
                 else:
-                    print('0 Pending Trigger Orders')
+                    print(f'{Fore.YELLOW}0 Pending Trigger Orders{Style.RESET_ALL}')
             else:
-                print(f'\nError Code:    {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code:    {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ################################# GET OPEN NORMAL ORDERS ###################################
 
@@ -409,34 +412,34 @@ class Blofin:
             if data['code'] == "0":
                 info = data['data']
                 if info:
-                    print(f'{len(info)} Pending Normal Order(s)')
+                    print(f'{Fore.CYAN}{len(info)} Pending Normal Order(s){Style.RESET_ALL}')
                     for item in info:
-                        print(f'\n#####################################')
-                        print(f'Symbol:        {item['instId']}')
-                        print(f'Order ID:      {item['orderId']}')
-                        print(f'Size:          {item['size']} Contract(s)')
-                        print(f'Leverage:      {item['leverage']}x')
-                        print(f'Position Side: {item['positionSide']}')
-                        print(f'Order Type:    {item['orderType']}')
-                        print(f'Price:         {item['price']}')
-                        print(f'TP:            {item['tpTriggerPrice']}')
-                        print(f'SL:            {item['slTriggerPrice']}')
-                        print(f'Filled Size:   {item['filledSize']}')
-                        print(f'Margin Mode:   {item['marginMode']}')
-                        print(f'Time:          {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
-                        print(f'#####################################\n')
+                        print(f'{Fore.CYAN}\n###############################################{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Symbol:        {item['instId']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Order ID:      {item['orderId']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Size:          {item['size']} Contract(s){Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Leverage:      {item['leverage']}x{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Position Side: {item['positionSide']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Order Type:    {item['orderType']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Price:         {item['price']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}TP:            {item['tpTriggerPrice']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}SL:            {item['slTriggerPrice']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Filled Size:   {item['filledSize']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Margin Mode:   {item['marginMode']}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}Time:          {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}{Style.RESET_ALL}')
+                        print(f'{Fore.CYAN}###############################################\n{Style.RESET_ALL}')
                 else:
-                    print('0 Pending Normal Orders')
+                    print(f'{Fore.YELLOW}0 Pending Normal Orders{Style.RESET_ALL}')
             else:
-                print(f'\nError Code:    {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code:    {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ##################################### GET MARKET PRICE #####################################
 
@@ -453,9 +456,9 @@ class Blofin:
                 return [0 , False]
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
     
     #################################### GET OPEN POSITIONS ####################################
 
@@ -472,41 +475,41 @@ class Blofin:
                 info = data['data']
                 if info:
                     list_to_return = []
-                    print(f'{len(info)} Open Position(s)')
+                    print(f'{Fore.CYAN}{len(info)} Open Position(s){Style.RESET_ALL}')
                     for item in info:
                         if fromInside:
                             list_to_return.append({'intId': item['instId'], 'positionSide': item['positionSide']})
                         else:
-                            print(f'\n#####################################')
-                            print(f'Symbol:         {item['instId']}')
-                            print(f'Position Id:    {item['positionId']}')
-                            print(f'Margin Mode:    {item['marginMode']}')
-                            print(f'Position Side:  {item['positionSide']}')
-                            print(f'Size:           {item['positions']} Contract(s)')
-                            print(f'Leverage        {item['leverage']}x')
-                            print(f'Price:          {item['averagePrice']}')
-                            print(f'Market Price:   {item['markPrice']}')
-                            print(f'Margin:         {item['margin']}')
-                            print(f'Liq Price:      {item['liquidationPrice']}')
-                            print(f'Unrealized PNL: {item['unrealizedPnl']}')
-                            print(f'Time:           {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}')
-                            print(f'#####################################\n')
+                            print(f'{Fore.CYAN}\n#####################################{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Symbol:         {item['instId']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Position Id:    {item['positionId']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Margin Mode:    {item['marginMode']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Position Side:  {item['positionSide']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Size:           {item['positions']} Contract(s){Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Leverage        {item['leverage']}x{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Price:          {item['averagePrice']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Market Price:   {item['markPrice']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Margin:         {item['margin']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Liq Price:      {item['liquidationPrice']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Unrealized PNL: {item['unrealizedPnl']}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}Time:           {datetime.datetime.fromtimestamp(int(item['createTime']) / 1000)}{Style.RESET_ALL}')
+                            print(f'{Fore.CYAN}#####################################\n{Style.RESET_ALL}')
                     
                     return list_to_return
                 else:
-                    print('0 Open Positions')
+                    print(f'{Fore.YELLOW}0 Open Positions{Style.RESET_ALL}')
                     return []
 
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
     
     ###################################### CHECK BALANCE #######################################
 
@@ -522,23 +525,24 @@ class Blofin:
             data = response.json()
             if data['code'] == "0":
                 info = data['data']['details'][0]
-                print('\n################## Balance ##################')
-                print(f'Currency:        {info['currency']}')
-                print(f'Total Equity:    {round(float(info['equity']), 2)}')
-                print(f'Available:       {round(float(info['available']), 2)}')
-                print(f'Isolated Equity: {round(float(info['isolatedEquity']), 2)}')
-                print('#############################################\n')
+                print(f'{Fore.CYAN}\n############### Balance ###############{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}Currency:        {info['currency']}{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}Total Equity:    {round(float(info['equity']), 2)}{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}Available:       {round(float(info['available']), 2)}{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}Isolated Equity: {round(float(info['isolatedEquity']), 2)}{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}Order Frozen:    {round(float(info['orderFrozen']), 2)}{Style.RESET_ALL}')
+                print(f'{Fore.CYAN}#######################################\n{Style.RESET_ALL}')
                 return round(float(info['available']), 2)
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
             
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ###################################### SET MARGIN MODE #####################################
 
@@ -555,17 +559,17 @@ class Blofin:
             response = requests.request(method, self.url+path, headers=h, json=body)
             data = response.json()
             if data['code'] == "0":
-                print(f'\nMargin Mode Set: {data['data']['marginMode']}\n')
+                print(f'{Fore.GREEN}\nMargin Mode Set: {data['data']['marginMode']}\n{Style.RESET_ALL}')
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
             
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ###################################### GET MARGIN MODE #####################################
 
@@ -581,19 +585,19 @@ class Blofin:
             data = response.json()
             if data['code'] == "0":
                 if not from_inside:
-                    print(f'\nMargin Mode: {data['data']['marginMode']}\n')
+                    print(f'{Fore.CYAN}\nMargin Mode: {data['data']['marginMode']}\n{Style.RESET_ALL}')
                 else:
                     return data['data']['marginMode']
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
             
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
 
     ##################################### GET TRADE HISTORY ####################################
@@ -614,29 +618,29 @@ class Blofin:
             data = response.json()
 
             if data['code'] == "0":
-                print('\nTrade History:')
+                print(f'{Fore.CYAN}\nTrade History:{Style.RESET_ALL}')
                 for item in data['data']:
-                    print(f'\n#####################################')
-                    print(f'Symbol:        {item['instId']}')
-                    print(f'Order ID:      {item['orderId']}')
-                    print(f'Trade ID:      {item['tradeId']}')
-                    print(f'Side:          {item['side']}')
-                    print(f'Position Side: {item['positionSide']}')
-                    print(f'Price:         {item['fillPrice']}')
-                    print(f'Size:          {item['fillSize']}')
-                    print(f'Fee:           {item['fee']}')
-                    print(f'Time:          {datetime.datetime.fromtimestamp(int(item['ts']) / 1000)}')
-                    print(f'#####################################\n')
+                    print(f'{Fore.CYAN}\n##########################################{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Symbol:        {item['instId']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Order ID:      {item['orderId']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Trade ID:      {item['tradeId']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Side:          {item['side']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Position Side: {item['positionSide']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Price:         {item['fillPrice']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Size:          {item['fillSize']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Fee:           {item['fee']}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}Time:          {datetime.datetime.fromtimestamp(int(item['ts']) / 1000)}{Style.RESET_ALL}')
+                    print(f'{Fore.CYAN}##########################################\n{Style.RESET_ALL}')
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
     
     #################################### GET CONTRACT INFO #####################################
 
@@ -652,12 +656,12 @@ class Blofin:
                 min_size = data['data'][0]['minSize']
                 return [contract_value, min_size]
             else:
-                print("Error in receiving contract info")
+                print(f"{Fore.RED}Error in receiving contract info{Style.RESET_ALL}")
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ##################################### GET_LEVERAGE ########################################
 
@@ -677,48 +681,51 @@ class Blofin:
                 elif position_side == 'short':
                     return int(data['data'][1]['leverage'])
             else:
-                print(f'\nError Code: {data['code']}')
-                print(f'Error Message: {data['msg']}')
-                print('Please refer to the docs:')
-                print('https://docs.blofin.com/index.html#errors\n')
+                print(f'{Fore.RED}\nError Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Error Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Please refer to the docs:{Style.RESET_ALL}')
+                print(f'{Fore.RED}https://docs.blofin.com/index.html#errors\n{Style.RESET_ALL}')
 
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
 
     ##################################### Calculate Size #######################################
 
-    def calculate_size(self, size, position_side, order_type, price=None):
+    def calculate_size(self, size, position_side, price=None):
         balance = self.check_balance()
         [contract_value, min_size] = self.contract_info()
         size_in_usdt = round((balance * size) / 100 , 2)
         leverage_multiplier = self.leverage(position_side)
         size_with_leverage = (size_in_usdt * leverage_multiplier)
-        text = lambda x: print(f"{x} Contract(s) (With leverage)")
+        text = lambda x: print(f"{Fore.CYAN}{x} Contract(s) (With leverage){Style.RESET_ALL}")
 
         if price is None:
             price = self.get_market_price()[0]
 
         each_contract_in_usdt = (contract_value * price)
-        print(f"{size}% of Balance: {size_in_usdt} USDT")
-        print(f'Leverage: {leverage_multiplier}x')
+        print(f"{Fore.CYAN}{size}% of Balance: {size_in_usdt} USDT{Style.RESET_ALL}")
+        print(f'{Fore.CYAN}Leverage: {leverage_multiplier}x{Style.RESET_ALL}')
 
         if min_size == '1':
             size_in_contract = math.floor(size_with_leverage / each_contract_in_usdt)
+            final_size_usdt = size_in_contract * each_contract_in_usdt
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
+            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
         
         elif min_size == '0.1':
             size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
+            final_size_usdt = size_in_contract * each_contract_in_usdt
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
+            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
             
 
         elif min_size == '0.01':
             size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
+            final_size_usdt = size_in_contract * each_contract_in_usdt
             text(size_in_contract)
-            return [size_in_contract, price, size_with_leverage, leverage_multiplier]
+            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
         
     ##################################### API AUTHENTICATION #####################################
 
@@ -744,19 +751,20 @@ class Blofin:
             if data['code'] == '0':
                 return True
             else:
-                print(f'\n- Error Code: {data['code']}')
-                print(f'- Message: {data['msg']}')
-                print('Try again\n')
+                print(f'{Fore.RED}\n- Error Code: {data['code']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}- Message: {data['msg']}{Style.RESET_ALL}')
+                print(f'{Fore.RED}Try again\n{Style.RESET_ALL}')
                 return False
         except requests.exceptions.HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
+            print(f'{Fore.RED}HTTP error occurred: {http_err}{Style.RESET_ALL}')
         except Exception as err:
-            print(f'Other error occurred: {err}')
+            print(f'{Fore.RED}Other error occurred: {err}{Style.RESET_ALL}')
         
     ########################################## Info ##############################################
 
     def print_info(self):
-        print('********************************************* IMPORTANT ***************************************************')
-        print("If the actual order size in the website shows less than entered, don't worry!\nSize calculation in Blofin API is a little tricky!")
-        print("For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2")
-        print('***********************************************************************************************************\n')
+        print(f'{Fore.YELLOW}{Style.BRIGHT}********************************************* IMPORTANT ***************************************************{Style.RESET_ALL}')
+        print(f"{Fore.YELLOW}If the actual order size shows less than entered, don't worry!\nSize calculation in Blofin API is a little tricky!{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}For example: minimum size for bitcoin is 0.1 contract. 0.15 is not acceptable! Must be either 0.1 or 0.2\nIn this case the script floors 0.15 to 0.1{Style.RESET_ALL}")
+        print(f'{Fore.YELLOW}{Style.BRIGHT}***********************************************************************************************************\n{Style.RESET_ALL}')
+
