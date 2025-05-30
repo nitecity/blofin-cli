@@ -9,7 +9,6 @@ init()
 
 def run():
 
-    order_ids = 'order_ids.txt'
     envfile = '.env'
     if not os.path.isfile(envfile):
         try:
@@ -172,21 +171,21 @@ def run():
             sl_in_usdt = round((final_size * cal_sl) / 100 , 2)
             
         
-        print(f'\n{Fore.GREEN}------------------------ Order Information -------------------{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}Pair:               "{symbol}-USDT"{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}Position Side:      "{position_side}"{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}Order type:         "{order_type}"{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}Leverage:           "{lvg}x"{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}Size with Leverage: "{final_size} USDT"{Style.RESET_ALL}')
+        print(f'\n{Fore.LIGHTBLUE_EX}------------------------ Order Information -------------------{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}Pair:               "{symbol}-USDT"{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}Position Side:      "{position_side}"{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}Order type:         "{order_type}"{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}Leverage:           "{lvg}x"{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}Size with Leverage: "{final_size} USDT"{Style.RESET_ALL}')
         if order_type == "market":
-            print(f'{Fore.GREEN}Price:              "{markPrice}"{Style.RESET_ALL}')
+            print(f'{Fore.LIGHTBLUE_EX}Price:              "{markPrice}"{Style.RESET_ALL}')
         else:
-            print(f'{Fore.GREEN}Price:              "{price}"{Style.RESET_ALL}')
+            print(f'{Fore.LIGHTBLUE_EX}Price:              "{price}"{Style.RESET_ALL}')
         if cal_tp:
-            print(f'{Fore.GREEN}TP:                 "{tp}" => "{cal_tp}%" = "{tp_in_usdt} USDT"{Style.RESET_ALL}')
+            print(f'{Fore.LIGHTBLUE_EX}TP:                 "{tp}" => {Fore.GREEN}"{cal_tp}%" = "{tp_in_usdt} USDT"{Style.RESET_ALL}')
         if cal_sl:
-            print(f'{Fore.GREEN}SL:                 "{sl}" => "{cal_sl}%" = "{sl_in_usdt} USDT"{Style.RESET_ALL}')
-        print(f'{Fore.GREEN}--------------------------------------------------------------{Style.RESET_ALL}\n')
+            print(f'{Fore.LIGHTBLUE_EX}SL:                 "{sl}" => {Fore.LIGHTRED_EX}"{cal_sl}%" = "{sl_in_usdt} USDT"{Style.RESET_ALL}')
+        print(f'{Fore.LIGHTBLUE_EX}--------------------------------------------------------------{Style.RESET_ALL}\n')
         
 
         try:
@@ -231,11 +230,7 @@ def run():
     elif prompt == "4":
 
         try:
-            print(f"{Fore.CYAN}\nPending Order ID/Algo IDs:{Style.RESET_ALL}")
-            with open(order_ids, 'r') as file:
-                contents = file.read()
-                print(f"{Fore.YELLOW}{contents}{Style.RESET_ALL}")
-            id = input(f"{Fore.YELLOW}Enter ID (if you want to cancel more than one order, simpley use ',') e,g '61404050, 1000060569014'\n> {Style.RESET_ALL}").strip()
+            id = input(f"{Fore.YELLOW}Enter Order/Algo ID (if you want to cancel more than one order, simpley put a comma between IDs ',')\nExample: '61404050, 1000060569014'\n> {Style.RESET_ALL}").strip()
             ids = id.split(',')
             for i in range(len(ids)):
                 ids[i] = ids[i].strip()

@@ -159,14 +159,9 @@ class Blofin:
                     if positionSide == "long":
                         print(f'{Fore.GREEN}\nLong:{Style.RESET_ALL}')
                         print(f"{Fore.GREEN}Order ID: {id}{Style.RESET_ALL}")
-                        print(f'{Fore.GREEN}Order ID saved in "order_ids.txt"\n{Style.RESET_ALL}')
-                        with open('order_ids.txt', 'a') as file:
-                            file.write(f"{id}\n")
                     else:
                         print(f'{Fore.GREEN}\nShort:{Style.RESET_ALL}')
                         print(f"{Fore.GREEN}Order ID: {id}\n{Style.RESET_ALL}")
-                        with open('order_ids.txt', 'a') as file:
-                            file.write(f"{id}\n")
                 else:
                     print(f'{Fore.RED}\nError Code: {data['data']['code']}{Style.RESET_ALL}')
                     print(f'{Fore.RED}Error Message: "{data['data']['msg']}"\n{Style.RESET_ALL}')
@@ -217,14 +212,9 @@ class Blofin:
                         if positionSide == "long":
                             print(f'{Fore.GREEN}\nLong Order Placed{Style.RESET_ALL}')
                             print(f"{Fore.GREEN}Order ID: {data['data'][0]['orderId']}{Style.RESET_ALL}")
-                            print(f"{Fore.GREEN}Order ID saved in \"order_ids.txt\"\n{Style.RESET_ALL}")
-                            with open('order_ids.txt', 'a') as file:
-                                file.write(f"{data['data'][0]['orderId']}\n")
                         else:
                             print(f'{Fore.GREEN}\nShort Order Placed{Style.RESET_ALL}')
                             print(f"{Fore.GREEN}Order ID: {data['data'][0]['orderId']}\n{Style.RESET_ALL}")
-                            with open('order_ids.txt', 'a') as file:
-                                file.write(f"{data['data'][0]['orderId']}\n")
                 else:
                     if data['code'] == "1":
                         print(f'{Fore.RED}\nError Code: {data['data'][0]['code']}{Style.RESET_ALL}')
@@ -281,12 +271,6 @@ class Blofin:
                     if len(id) < 13:
                         if data['data']['code'] == "0":
                             print(f"{Fore.GREEN}Trigger Order with ID {id} has been Canceled{Style.RESET_ALL}")
-                            with open('order_ids.txt', 'r') as file:
-                                lines = file.readlines()
-                            with open('order_ids.txt', 'w') as file:
-                                for line in lines:
-                                    if line != id+"\n":
-                                        file.write(line)
                         else:
                             print(f"{Fore.RED}Error Code: {data['data']['code']}{Style.RESET_ALL}")
                             print(f'{Fore.RED}Error Message: "{data['data']['msg']}"{Style.RESET_ALL}')
@@ -294,12 +278,6 @@ class Blofin:
                     else:
                         if data['data'][0]['code'] == "0":
                             print(f"{Fore.GREEN}Order with ID {id} has been Canceled{Style.RESET_ALL}")
-                            with open('order_ids.txt', 'r') as file:
-                                lines = file.readlines()
-                            with open('order_ids.txt', 'w') as file:
-                                for line in lines:
-                                    if line != id+"\n":
-                                        file.write(line)
                         else:
                             print(f'{Fore.RED}Error:{Style.RESET_ALL}')
                             print(f'{Fore.RED}{data}{Style.RESET_ALL}')
