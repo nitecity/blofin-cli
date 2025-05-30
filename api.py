@@ -631,7 +631,7 @@ class Blofin:
             data = res.json()
             if data['code'] == "0":
                 contract_value = float(data['data'][0]['contractValue'])
-                min_size = data['data'][0]['minSize']
+                min_size = float(data['data'][0]['minSize'])
                 return [contract_value, min_size]
             else:
                 print(f"{Fore.RED}Error in receiving contract info{Style.RESET_ALL}")
@@ -672,38 +672,32 @@ class Blofin:
     ##################################### Calculate Size #######################################
 
     def calculate_size(self, size, position_side, price=None):
+        """
+        Calculate contract size based on balance, leverage, and contract info.
+        Returns [size_in_contract, price, final_size_usdt, leverage_multiplier].
+        """
         balance = self.check_balance()
-        [contract_value, min_size] = self.contract_info()
-        size_in_usdt = round((balance * size) / 100 , 2)
+        contract_value, min_size = self.contract_info()
+        size_in_usdt = round((balance * size) / 100, 2)
         leverage_multiplier = self.leverage(position_side)
-        size_with_leverage = (size_in_usdt * leverage_multiplier)
-        text = lambda x: print(f"{Fore.CYAN}{x} Contract(s) (With leverage){Style.RESET_ALL}")
+        size_with_leverage = size_in_usdt * leverage_multiplier
 
         if price is None:
             price = self.get_market_price()[0]
 
-        each_contract_in_usdt = (contract_value * price)
+        each_contract_in_usdt = contract_value * price
+
         print(f"{Fore.CYAN}{size}% of Balance: {size_in_usdt} USDT{Style.RESET_ALL}")
-        print(f'{Fore.CYAN}Leverage: {leverage_multiplier}x{Style.RESET_ALL}')
+        print(f"{Fore.CYAN}Leverage: {leverage_multiplier}x{Style.RESET_ALL}")
 
-        if min_size == '1':
-            size_in_contract = math.floor(size_with_leverage / each_contract_in_usdt)
-            final_size_usdt = size_in_contract * each_contract_in_usdt
-            text(size_in_contract)
-            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
-        
-        elif min_size == '0.1':
-            size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 10 ) / 10
-            final_size_usdt = size_in_contract * each_contract_in_usdt
-            text(size_in_contract)
-            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
-            
+        precision = abs(int(round(math.log10(min_size)))) if min_size < 1 else 0
+        multiplier = 10 ** precision if precision else 1
 
-        elif min_size == '0.01':
-            size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * 100 ) / 100
-            final_size_usdt = size_in_contract * each_contract_in_usdt
-            text(size_in_contract)
-            return [size_in_contract, price, final_size_usdt, leverage_multiplier]
+        size_in_contract = math.floor((size_with_leverage / each_contract_in_usdt) * multiplier) / multiplier
+        final_size_usdt = size_in_contract * each_contract_in_usdt
+
+        print(f"{Fore.CYAN}{size_in_contract} Contract(s) (With leverage){Style.RESET_ALL}")
+        return [size_in_contract, price, final_size_usdt, leverage_multiplier]
         
     ##################################### API AUTHENTICATION #####################################
 
