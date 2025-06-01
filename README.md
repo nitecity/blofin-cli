@@ -1,12 +1,11 @@
 ## Interact With Your Trading Account Via Terminal
 
 ### This script only works with [Blofin Exchange](https://blofin.com)
-#### Use this script and you don't have to login to your account everytime!
 
 1. Prerequisites:
-    - Creat your API Keys here: [Blofin](https://blofin.com/account/apis)
-    - Install [Python](https://www.python.org/downloads/)
-    - Open Terminal and Install required packages:<br><br>
+    <p>- Creat your API Keys here: [Blofin](https://blofin.com/account/apis)</p>
+    <p>- Install [Python](https://www.python.org/downloads/)</p>
+    <p>- Open Terminal and Install required packages:</p>
         ```
           pip install python-dotenv
           pip install requests
@@ -31,13 +30,17 @@
        python3 main.py
    ```
 
-4. After storing your ``API Keys``, You'll see these options:
+4. The script asks you to provide your API credentials, then stores in ``.env`` (only once):
+    <img width="1000" alt="api" src="./imgs/api.png" />
+    
 
-    <img width="689" alt="examp1" src="./imgs/1.png" />
+5. After storing your ``API Keys``, You'll see the options:
 
-5. Let's place a limit order
+    <img width="759" alt="examp1" src="./imgs/1.png" />
+
+6. Let's place a limit order
     <p><i>Look at the inputs</i></p>
-    <img width="562" alt="examp2" src="./imgs/2.png" />
-    <img width="562" alt="examp3" src="./imgs/3.png" />
+    <img width="759" alt="examp2" src="./imgs/2.png" />
+    <img width="759" alt="examp3" src="./imgs/3.png" />
 
 <p><i>TP-SL calculation is approximate</i></p>
