@@ -1,7 +1,3 @@
-Of course, here is a refined version of your `README.md` file.
-
------
-
 ## Blofin-CLI: Trade on Blofin Exchange from Your Terminal
 
 Blofin-CLI is a powerful and convenient command-line tool that allows you to interact with your [Blofin Exchange](https://blofin.com) trading account directly from your terminal. Place and cancel orders, view your open positions and pending orders, and close positions with ease.
