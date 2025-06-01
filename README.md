@@ -40,7 +40,7 @@ Before you begin, you will need the following:
 
 The first time you run the script, you will be prompted to enter your Blofin API Key, Secret Key, and Passphrase. This information will be securely stored in a `.env` file in the project directory for future use.
 
-\<img width="1000" alt="API Key Setup" src="./imgs/api.png" /\>
+<img width="1000" alt="API Key Setup" src="./imgs/api.png" />
 
 ### Usage
 
@@ -60,14 +60,14 @@ Run the script from your terminal:
 
 Once the script is running, you will see a menu of available options:
 
-\<img width="700" alt="Main Menu" src="./imgs/1.png" /\>
+<img width="700" alt="Main Menu" src="./imgs/1.png" />
 
 **Placing a Limit Order:**
 
 To place a limit order, select the appropriate option from the menu and follow the prompts to enter the required information, such as the trading pair, order side, size, and price.
 
-\<img width="700" alt="Placing a Limit Order" src="./imgs/2.png" /\>
-\<img width="700" alt="Limit Order Confirmation" src="./imgs/3.png" /\>
+<img width="700" alt="Placing a Limit Order" src="./imgs/2.png" />
+<img width="700" alt="Limit Order Confirmation" src="./imgs/3.png" />
 
 ### Disclaimer
 
