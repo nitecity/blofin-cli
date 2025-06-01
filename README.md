@@ -7,6 +7,9 @@ Blofin-CLI is a powerful and convenient command-line tool that allows you to int
   * **Place Orders:** Quickly execute market and limit orders.
   * **Cancel Orders:** Cancel pending orders.
   * **Position Management:** Get a clear overview of your open and pending orders, and close open positions.
+  * **Get and Set Leverage:** Retrieve the current leverage and modify it as needed.
+  * **Get and Set Margin Mode:** Check the active margin mode and change it.
+  * **Get Balance Information:** Fetch your latest account balance details.
 
 ### Prerequisites
 
