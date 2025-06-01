@@ -37,11 +37,11 @@
 
 5. After storing your ``API Keys``, You'll see the options:
 
-    <img width="759" alt="examp1" src="./imgs/1.png" />
+    <img width="700" alt="examp1" src="./imgs/1.png" />
 
 6. Let's place a limit order
     <p><i>Look at the inputs</i></p>
-    <img width="759" alt="examp2" src="./imgs/2.png" />
-    <img width="759" alt="examp3" src="./imgs/3.png" />
+    <img width="700" alt="examp2" src="./imgs/2.png" />
+    <img width="700" alt="examp3" src="./imgs/3.png" />
 
 <p><i>TP-SL calculation is approximate</i></p>
