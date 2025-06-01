@@ -3,10 +3,11 @@
 ### This script only works with [Blofin Exchange](https://blofin.com)
 
 1. Prerequisites:
-    <p>- Creat your API Keys here: [Blofin](https://blofin.com/account/apis)</p>
-    <p>- Install [Python](https://www.python.org/downloads/)</p>
-    <p>- Open Terminal and Install required packages:</p>
-        ```
+    - Creat your API Keys here: [Blofin](https://blofin.com/account/apis)
+    - Install [Python](https://www.python.org/downloads/)
+    - Open Terminal and Install required packages:
+    <br/>
+        ```bash
           pip install python-dotenv
           pip install requests
           pip install colorama
