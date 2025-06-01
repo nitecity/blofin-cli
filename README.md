@@ -7,7 +7,7 @@
     - Install [Python](https://www.python.org/downloads/)
     - Open Terminal and Install required packages:
     <br/>
-        ```.bash
+        ```
           pip install python-dotenv
           pip install requests
           pip install colorama
