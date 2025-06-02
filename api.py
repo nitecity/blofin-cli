@@ -295,6 +295,7 @@ class Blofin:
     ##################################### CLOSE POSITIONS ######################################
 
     def close_position(self, position_side='', isAll=False):
+
         def _close_single_position(inst_id, pos_side):
             path = "/api/v1/trade/close-position"
             method = "POST"
@@ -330,7 +331,7 @@ class Blofin:
 
         if isAll:
             for item in open_positions:
-                _close_single_position(item['intId'], item['positionSide'])
+                _close_single_position(item['instId'], item['positionSide'])
         else:
             _close_single_position(self.symbol, position_side)
 
@@ -456,7 +457,7 @@ class Blofin:
                     print(f'{Fore.CYAN}{len(info)} Open Position(s){Style.RESET_ALL}')
                     for item in info:
                         if fromInside:
-                            list_to_return.append({'intId': item['instId'], 'positionSide': item['positionSide']})
+                            list_to_return.append({'instId': item['instId'], 'positionSide': item['positionSide']})
                         else:
                             print(f'{Fore.CYAN}\n#####################################{Style.RESET_ALL}')
                             print(f'{Fore.CYAN}Symbol:         {item['instId']}{Style.RESET_ALL}')
