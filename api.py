@@ -156,11 +156,12 @@ class Blofin:
             if data['code'] == "0":
                 if data['data']['code'] == "0":
                     id = data['data']['algoId']
+                    print(f'{Fore.GREEN}Success{Style.RESET_ALL}')
                     if positionSide == "long":
-                        print(f'{Fore.GREEN}\nLong:{Style.RESET_ALL}')
+                        print(f'{Fore.GREEN}\nTrigger Order Placed: Long{Style.RESET_ALL}')
                         print(f"{Fore.GREEN}Order ID: {id}{Style.RESET_ALL}")
                     else:
-                        print(f'{Fore.GREEN}\nShort:{Style.RESET_ALL}')
+                        print(f'{Fore.GREEN}\nTrigger Order Placed: Short{Style.RESET_ALL}')
                         print(f"{Fore.GREEN}Order ID: {id}\n{Style.RESET_ALL}")
                 else:
                     print(f'{Fore.RED}\nError Code: {data['data']['code']}{Style.RESET_ALL}')

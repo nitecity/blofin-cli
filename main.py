@@ -185,8 +185,8 @@ def run():
             print(f'{Fore.LIGHTBLUE_EX}TP:                 "{tp}" => {Fore.GREEN}"{cal_tp}%" = "{tp_in_usdt} USDT"{Style.RESET_ALL}')
         if cal_sl:
             print(f'{Fore.LIGHTBLUE_EX}SL:                 "{sl}" => {Fore.LIGHTRED_EX}"{cal_sl}%" = "{sl_in_usdt} USDT"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}--------------------------------------------------------------{Style.RESET_ALL}\n')
-        
+        print(f'{Fore.LIGHTBLUE_EX}--------------------------------------------------------------{Style.RESET_ALL}')
+        print(f'{Fore.YELLOW}* TP and SL calculation is approximate for market orders{Style.RESET_ALL}\n')
 
         try:
             sure = input(f"{Fore.YELLOW}\nDo you confirm? [y/n]\n> {Style.RESET_ALL}").lower().strip()
@@ -194,7 +194,7 @@ def run():
             print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
             return
         if sure == "no" or sure == "n":
-            print(f'{Fore.CYAN}Ok, see you later!{Style.RESET_ALL}\n')
+            print(f'{Fore.CYAN}Ok, See you later!{Style.RESET_ALL}\n')
             return
 
         if position_side == 'long':

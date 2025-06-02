@@ -70,4 +70,4 @@ To place a limit order, select the appropriate option from the menu and follow t
 
 ### Disclaimer
 
-***NOTE:*** The Take Profit (TP) and Stop Loss (SL) calculations are approximate. This tool is provided as-is, and the user assumes all risk associated with its use.
+***NOTE:*** The Take Profit (TP) and Stop Loss (SL) calculations for ``market`` orders are approximate.
