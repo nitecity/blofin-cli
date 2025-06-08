@@ -39,7 +39,7 @@ def run():
                 f.write(f'SECRET="{secret}"\n')
                 f.write(f'PASSPHRASE="{passphrase}"\n')
             print(f'{GREEN}\n----------------------------------------{RESET}')
-            print(f'{GREEN}\nProvided API data is valid{Style.RESET_ALL}')
+            print(f'{GREEN}\nProvided API data is valid{RESET}')
             print(f'{GREEN}Your API data has been stored in ".env"{RESET}')
             print(f'{GREEN}----------------------------------------{RESET}')
             
