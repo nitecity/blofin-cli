@@ -26,9 +26,9 @@ def run():
             print(f'{CYAN}\nBefore we get started, you need to provide the API credentials you got from https://blofin.com/account/apis{RESET}')
             api_key = input(f'{YELLOW}API Key:\n> {RESET}').strip()
             secret = input(f'{YELLOW}Secret Key:\n> {RESET}').strip()
-            passphrase = input(f'{Fore.YELLOW}Passphrase:\n> {Style.RESET_ALL}').strip()
+            passphrase = input(f'{YELLOW}Passphrase:\n> {RESET}').strip()
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
 
         b = Blofin()
@@ -38,18 +38,18 @@ def run():
                 f.write(f'API_KEY="{api_key}"\n')
                 f.write(f'SECRET="{secret}"\n')
                 f.write(f'PASSPHRASE="{passphrase}"\n')
-            print(f'{Fore.GREEN}\n----------------------------------------{Style.RESET_ALL}')
-            print(f'{Fore.GREEN}\nProvided API data is valid{Style.RESET_ALL}')
-            print(f'{Fore.GREEN}Your API data has been stored in ".env"{Style.RESET_ALL}')
-            print(f'{Fore.GREEN}----------------------------------------{Style.RESET_ALL}')
+            print(f'{GREEN}\n----------------------------------------{RESET}')
+            print(f'{GREEN}\nProvided API data is valid{Style.RESET_ALL}')
+            print(f'{GREEN}Your API data has been stored in ".env"{RESET}')
+            print(f'{GREEN}----------------------------------------{RESET}')
             
         else:
             return
 
-    print(f'{Fore.MAGENTA}{Style.BRIGHT}\n************************* Welcome *************************{Style.RESET_ALL}')
-    print(f'{Fore.CYAN}You are going to interact with your account in "Blofin.com"{Style.RESET_ALL}')
-    print(f'{Fore.CYAN}Pick One of The Options Below:{Style.RESET_ALL}')
-    print(f'{Fore.MAGENTA}{Style.BRIGHT}***********************************************************\n{Style.RESET_ALL}')
+    print(f'{MAGENTA}{Style.BRIGHT}\n************************* Welcome *************************{RESET}')
+    print(f'{CYAN}You are going to interact with your account in "Blofin.com"{RESET}')
+    print(f'{CYAN}Pick One of The Options Below:{Style.RESET_ALL}')
+    print(f'{MAGENTA}{Style.BRIGHT}***********************************************************\n{RESET}')
     
 
     try:
