@@ -7,14 +7,25 @@ from colorama import Fore, Style, init
 
 init()
 
+# Colors
+CYAN = Fore.CYAN
+YELLOW = Fore.YELLOW
+GREEN = Fore.GREEN
+RED = Fore.RED
+MAGENTA = Fore.MAGENTA
+LIGHTBLUE_EX = Fore.LIGHTBLUE_EX
+LIGHTRED_EX = Fore.LIGHTRED_EX
+RESET = Style.RESET_ALL
+BRIGHT = Style.BRIGHT
+
 def run():
 
     envfile = '.env'
     if not os.path.isfile(envfile):
         try:
-            print(f'{Fore.CYAN}\nBefore we get started, you need to provide the API credentials you got from https://blofin.com/account/apis{Style.RESET_ALL}')
-            api_key = input(f'{Fore.YELLOW}API Key:\n> {Style.RESET_ALL}').strip()
-            secret = input(f'{Fore.YELLOW}Secret Key:\n> {Style.RESET_ALL}').strip()
+            print(f'{CYAN}\nBefore we get started, you need to provide the API credentials you got from https://blofin.com/account/apis{RESET}')
+            api_key = input(f'{YELLOW}API Key:\n> {RESET}').strip()
+            secret = input(f'{YELLOW}Secret Key:\n> {RESET}').strip()
             passphrase = input(f'{Fore.YELLOW}Passphrase:\n> {Style.RESET_ALL}').strip()
         except:
             print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
