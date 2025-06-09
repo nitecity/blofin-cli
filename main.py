@@ -46,16 +46,16 @@ def run():
         else:
             return
 
-    print(f'{MAGENTA}{Style.BRIGHT}\n************************* Welcome *************************{RESET}')
+    print(f'{MAGENTA}{BRIGHT}\n************************* Welcome *************************{RESET}')
     print(f'{CYAN}You are going to interact with your account in "Blofin.com"{RESET}')
-    print(f'{CYAN}Pick One of The Options Below:{Style.RESET_ALL}')
-    print(f'{MAGENTA}{Style.BRIGHT}***********************************************************\n{RESET}')
+    print(f'{CYAN}Pick One of The Options Below:{RESET}')
+    print(f'{MAGENTA}{BRIGHT}***********************************************************\n{RESET}')
     
 
     try:
-        prompt = input(f"{Fore.YELLOW}1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n14. Info About Size\n0. Exit\n\n> {Style.RESET_ALL}")
+        prompt = input(f"{YELLOW}1. Place Order\n2. Pending Orders\n3. Open Positions\n4. Cancel Order\n5. Close Position\n6. Get Leverage\n7. Set Leverage\n8. Get Margin Mode\n9. Set Margin Mode\n10. Print API Credentials\n11. Modify API Credentials\n12. Get Balance\n13. Trade History\n14. Info About Size\n0. Exit\n\n> {RESET}")
     except:
-        print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+        print(f"{RED}\nOperation cancelled by user{RESET}")
         return
     if prompt == '0':
         return
@@ -64,14 +64,14 @@ def run():
             valid_inputs = ['1', '2', '3', '4']
             price = None
 
-            symbol = input(f'{Fore.YELLOW}Enter Symbol\nExample: [btc] | [eth]\n> {Style.RESET_ALL}').upper().strip()
+            symbol = input(f'{YELLOW}Enter Symbol\nExample: [btc] | [eth]\n> {RESET}').upper().strip()
             b = Blofin(symbol+"-USDT")
             if not b.get_market_price()[1]:
-                print(f"{Fore.RED}Invalid Symbol{Style.RESET_ALL}")
+                print(f"{RED}Invalid Symbol{RESET}")
                 return
-            order_type = input(f"{Fore.YELLOW}Order Type:\n1. limit\n2. market\n3. trigger\n4. post_only\n> {Style.RESET_ALL}").lower().strip()
+            order_type = input(f"{YELLOW}Order Type:\n1. limit\n2. market\n3. trigger\n4. post_only\n> {RESET}").lower().strip()
             if not order_type in valid_inputs:
-                print(f'{Fore.RED}Invalid Input{Style.RESET_ALL}')
+                print(f'{RED}Invalid Input{RESET}')
                 return
             position_side = input(f"{Fore.YELLOW}Position Side:\n1. long\n2. short\n> {Style.RESET_ALL}").lower().strip()
             if not position_side in valid_inputs[:2]:
