@@ -73,15 +73,15 @@ def run():
             if not order_type in valid_inputs:
                 print(f'{RED}Invalid Input{RESET}')
                 return
-            position_side = input(f"{Fore.YELLOW}Position Side:\n1. long\n2. short\n> {Style.RESET_ALL}").lower().strip()
+            position_side = input(f"{YELLOW}Position Side:\n1. long\n2. short\n> {RESET}").lower().strip()
             if not position_side in valid_inputs[:2]:
-                print(f'{Fore.RED}Invalid Input{Style.RESET_ALL}')
+                print(f'{RED}Invalid Input{RESET}')
                 return
-            size = input(f'{Fore.YELLOW}Size (%): Example: [100] means "100%" of your balance\n> {Style.RESET_ALL}').strip()
+            size = input(f'{YELLOW}Size (%): Example: [100] means "100%" of your balance\n> {RESET}').strip()
             try:
                 size = float(size)
                 if size < 1 or size > 100:
-                    print(f'{Fore.RED}Size Must be 1-100{Style.RESET_ALL}')
+                    print(f'{RED}Size Must be 1-100{RESET}')
                     return
             except ValueError:
                 print(f"{Fore.RED}Size is mandatory and must be digit{Style.RESET_ALL}")
