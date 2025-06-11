@@ -84,14 +84,14 @@ def run():
                     print(f'{RED}Size Must be 1-100{RESET}')
                     return
             except ValueError:
-                print(f"{Fore.RED}Size is mandatory and must be digit{Style.RESET_ALL}")
+                print(f"{RED}Size is mandatory and must be digit{RESET}")
                 return
-            price = input(f"{Fore.YELLOW}Price:\n> {Style.RESET_ALL}").lower().strip() if not order_type == '2' else print(f"{Fore.CYAN}Order Type: market{Style.RESET_ALL}")
+            price = input(f"{YELLOW}Price:\n> {RESET}").lower().strip() if not order_type == '2' else print(f"{CYAN}Order Type: market{RESET}")
             try:
                 if order_type != '2':
                     price = float(price)
                     if price <= 0:
-                        print(f"{Fore.RED}Price Must be greater than 0{Style.RESET_ALL}")
+                        print(f"{RED}Price Must be greater than 0{RESET}")
                         return
             except ValueError:
                 print(f"{Fore.RED}Price is mandatory and must be digit{Style.RESET_ALL}")
