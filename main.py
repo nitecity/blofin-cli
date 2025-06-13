@@ -94,17 +94,17 @@ def run():
                         print(f"{RED}Price Must be greater than 0{RESET}")
                         return
             except ValueError:
-                print(f"{Fore.RED}Price is mandatory and must be digit{Style.RESET_ALL}")
+                print(f"{RED}Price is mandatory and must be digit{RESET}")
                 return
-            tp = input(f"{Fore.YELLOW}TP: (Optional)\n> {Style.RESET_ALL}").strip()
+            tp = input(f"{YELLOW}TP: (Optional)\n> {RESET}").strip()
             try:
                 if tp:
                     tp = float(tp)
                     if tp <= 0:
-                        print(f"{Fore.RED}TP Must be greater than 0{Style.RESET_ALL}")
+                        print(f"{RED}TP Must be greater than 0{RESET}")
                         return
             except ValueError:
-                print(f"{Fore.RED}TP must be digit{Style.RESET_ALL}")
+                print(f"{RED}TP must be digit{RESET}")
                 return
             sl = input(f"{Fore.YELLOW}SL: (Optional)\n> {Style.RESET_ALL}").strip()
             try:
