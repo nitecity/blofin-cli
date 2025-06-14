@@ -106,21 +106,21 @@ def run():
             except ValueError:
                 print(f"{RED}TP must be digit{RESET}")
                 return
-            sl = input(f"{Fore.YELLOW}SL: (Optional)\n> {Style.RESET_ALL}").strip()
+            sl = input(f"{YELLOW}SL: (Optional)\n> {RESET}").strip()
             try:
                 if sl:
                     sl = float(sl)
                     if sl <= 0:
-                        print(f"{Fore.RED}SL Must be greater than 0{Style.RESET_ALL}")
+                        print(f"{RED}SL Must be greater than 0{RESET}")
                         return
             except ValueError:
-                print(f"{Fore.RED}SL must be digit{Style.RESET_ALL}")
+                print(f"{RED}SL must be digit{RESET}")
                 return
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
 
-        print(f'\n{Fore.CYAN}Please Wait...{Style.RESET_ALL}')
+        print(f'\n{CYAN}Please Wait...{RESET}')
 
         if position_side == '1':
             position_side = 'long'
@@ -182,7 +182,7 @@ def run():
             sl_in_usdt = round((final_size * cal_sl) / 100 , 2)
             
         
-        print(f'\n{Fore.LIGHTBLUE_EX}------------------------ Order Information -------------------{Style.RESET_ALL}')
+        print(f'\n{LIGHTBLUE_EX}------------------------ Order Information -------------------{RESET}')
         print(f'{Fore.LIGHTBLUE_EX}Pair:               "{symbol}-USDT"{Style.RESET_ALL}')
         print(f'{Fore.LIGHTBLUE_EX}Position Side:      "{position_side}"{Style.RESET_ALL}')
         print(f'{Fore.LIGHTBLUE_EX}Order type:         "{order_type}"{Style.RESET_ALL}')
