@@ -183,29 +183,29 @@ def run():
             
         
         print(f'\n{LIGHTBLUE_EX}------------------------ Order Information -------------------{RESET}')
-        print(f'{Fore.LIGHTBLUE_EX}Pair:               "{symbol}-USDT"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}Position Side:      "{position_side}"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}Order type:         "{order_type}"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}Leverage:           "{lvg}x"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}Size with Leverage: "{final_size} USDT"{Style.RESET_ALL}')
+        print(f'{LIGHTBLUE_EX}Pair:               "{symbol}-USDT"{RESET}')
+        print(f'{LIGHTBLUE_EX}Position Side:      "{position_side}"{RESET}')
+        print(f'{LIGHTBLUE_EX}Order type:         "{order_type}"{RESET}')
+        print(f'{LIGHTBLUE_EX}Leverage:           "{lvg}x"{RESET}')
+        print(f'{LIGHTBLUE_EX}Size with Leverage: "{final_size} USDT"{RESET}')
         if order_type == "market":
-            print(f'{Fore.LIGHTBLUE_EX}Price:              "{markPrice}"{Style.RESET_ALL}')
+            print(f'{LIGHTBLUE_EX}Price:              "{markPrice}"{RESET}')
         else:
-            print(f'{Fore.LIGHTBLUE_EX}Price:              "{price}"{Style.RESET_ALL}')
+            print(f'{LIGHTBLUE_EX}Price:              "{price}"{RESET}')
         if cal_tp:
-            print(f'{Fore.LIGHTBLUE_EX}TP:                 "{tp}" => {Fore.GREEN}"{cal_tp}%" = "{tp_in_usdt} USDT"{Style.RESET_ALL}')
+            print(f'{LIGHTBLUE_EX}TP:                 "{tp}" => {GREEN}"{cal_tp}%" = "{tp_in_usdt} USDT"{RESET}')
         if cal_sl:
-            print(f'{Fore.LIGHTBLUE_EX}SL:                 "{sl}" => {Fore.LIGHTRED_EX}"{cal_sl}%" = "{sl_in_usdt} USDT"{Style.RESET_ALL}')
-        print(f'{Fore.LIGHTBLUE_EX}--------------------------------------------------------------{Style.RESET_ALL}')
-        print(f'{Fore.YELLOW}* TP and SL calculation is approximate for market orders{Style.RESET_ALL}\n')
+            print(f'{LIGHTBLUE_EX}SL:                 "{sl}" => {LIGHTRED_EX}"{cal_sl}%" = "{sl_in_usdt} USDT"{RESET}')
+        print(f'{LIGHTBLUE_EX}--------------------------------------------------------------{RESET}')
+        print(f'{YELLOW}* TP and SL calculation is approximate for market orders{Style.RESET_ALL}\n')
 
         try:
             sure = input(f"{Fore.YELLOW}\nDo you confirm? [y/n]\n> {Style.RESET_ALL}").lower().strip()
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
         if sure == "no" or sure == "n":
-            print(f'{Fore.CYAN}Ok, See you later!{Style.RESET_ALL}\n')
+            print(f'{CYAN}Ok, See you later!{RESET}\n')
             return
 
         if position_side == 'long':
