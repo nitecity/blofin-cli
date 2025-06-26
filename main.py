@@ -446,7 +446,7 @@ def run():
         try:
             symbol = input(f'{Fore.YELLOW}\nEnter symbol: [Default: All symbols]\n> {Style.RESET_ALL}')
             limit = input(f'{Fore.YELLOW}How many trades: [Default: 10]\n> {Style.RESET_ALL}')
-            if not limit.isdigit():
+            if not limit == '' and not limit.isdigit():
                 print(f'{Fore.RED}Limit value must be digit{Style.RESET_ALL}')
         except:
             print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
