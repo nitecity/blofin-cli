@@ -246,11 +246,11 @@ def run():
             for i in range(len(ids)):
                 ids[i] = ids[i].strip()
                 if not ids[i].isdigit():
-                    print(f'{Fore.RED}Order Id is mandatory and must be digit{Style.RESET_ALL}')
+                    print(f'{RED}Order Id is mandatory and must be digit{RESET}')
                     return
                 
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
 
         b = Blofin()
@@ -262,7 +262,7 @@ def run():
             valid_inputs = ['1', '2']
             options = input(f"{Fore.YELLOW}\n1. Close One Position\n2. Close All Positions\n> {Style.RESET_ALL}")
             if not options in valid_inputs:
-                print(f'{Fore.RED}Invalid Input{Style.RESET_ALL}')
+                print(f'{RED}Invalid Input{RESET}')
                 return
             
             if options == '1':
