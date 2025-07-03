@@ -260,16 +260,16 @@ def run():
 
         try:
             valid_inputs = ['1', '2']
-            options = input(f"{Fore.YELLOW}\n1. Close One Position\n2. Close All Positions\n> {Style.RESET_ALL}")
+            options = input(f"{YELLOW}\n1. Close One Position\n2. Close All Positions\n> {RESET}")
             if not options in valid_inputs:
                 print(f'{RED}Invalid Input{RESET}')
                 return
             
             if options == '1':
-                symbol = input(f"{Fore.YELLOW}\nEnter Symbol: e.g \"btc\"\n> {Style.RESET_ALL}").upper().strip()
-                position_side = input(f"{Fore.YELLOW}Position Side:\n1. Long\n2. Short\n> {Style.RESET_ALL}").strip()
+                symbol = input(f"{YELLOW}\nEnter Symbol: e.g \"btc\"\n> {RESET}").upper().strip()
+                position_side = input(f"{Fore.YELLOW}Position Side:\n1. Long\n2. Short\n> {RESET}").strip()
                 if not position_side in valid_inputs:
-                    print(f'{Fore.RED}Invalid Input!{Style.RESET_ALL}')
+                    print(f'{Fore.RED}Invalid Input!{RESET}')
                     return
                 position_side_map = {
                     '1': 'long',
@@ -282,7 +282,7 @@ def run():
                 b = Blofin()
                 b.close_position(position_side='',isAll=True)
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user or something else went wrong!{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user or something else went wrong!{RESET}")
             return
         
         
