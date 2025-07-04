@@ -306,11 +306,11 @@ def run():
 
         try:
             valid_inputs = ['1', '2', '3']
-            symbol = input(f"{Fore.YELLOW}\nEnter Symbol: e.g \"btc\"\n> {Style.RESET_ALL}").upper().strip()
+            symbol = input(f"{YELLOW}\nEnter Symbol: e.g \"btc\"\n> {RESET}").upper().strip()
             if not symbol:
-                print(f'{Fore.RED}Symbol is mandatory{Style.RESET_ALL}')
+                print(f'{RED}Symbol is mandatory{RESET}')
                 return
-            leverage = input(f"{Fore.YELLOW}Leverage:\n> {Style.RESET_ALL}").strip()
+            leverage = input(f"{YELLOW}Leverage:\n> {RESET}").strip()
             if not leverage or not leverage.isdigit():
                 print(f'{Fore.RED}Leverage is mandatory and must be digit{Style.RESET_ALL}')
                 return
