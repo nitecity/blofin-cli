@@ -297,7 +297,7 @@ def run():
             modified_words = [element + '-usdt' for element in symbols]
             modified_symbols = ','.join(modified_words)
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
         b = Blofin()
         b.get_leverage(modified_symbols)
