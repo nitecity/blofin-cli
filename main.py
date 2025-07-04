@@ -269,7 +269,7 @@ def run():
                 symbol = input(f"{YELLOW}\nEnter Symbol: e.g \"btc\"\n> {RESET}").upper().strip()
                 position_side = input(f"{Fore.YELLOW}Position Side:\n1. Long\n2. Short\n> {RESET}").strip()
                 if not position_side in valid_inputs:
-                    print(f'{Fore.RED}Invalid Input!{RESET}')
+                    print(f'{RED}Invalid Input!{RESET}')
                     return
                 position_side_map = {
                     '1': 'long',
@@ -290,7 +290,7 @@ def run():
     elif prompt == "6":
 
         try:
-            symbol = input(f"{Fore.YELLOW}\nEnter symbol(s):\nFor more than one, simply add ',' e,g. \"btc,eth\"\n> {Style.RESET_ALL}").strip()
+            symbol = input(f"{YELLOW}\nEnter symbol(s):\nFor more than one, simply add ',' e,g. \"btc,eth\"\n> {RESET}").strip()
             symbols = symbol.split(',')
             for i in range(len(symbols)):
                 symbols[i] = symbols[i].strip()
