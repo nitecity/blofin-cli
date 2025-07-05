@@ -340,9 +340,9 @@ def run():
 
         try:
             valid_inputs = ['1', '2']
-            marginMode = input(f"{Fore.YELLOW}\nMargin Mode:\n1. Isolated\n2. Cross\n> {Style.RESET_ALL}").strip()
+            marginMode = input(f"{YELLOW}\nMargin Mode:\n1. Isolated\n2. Cross\n> {RESET}").strip()
             if not marginMode in valid_inputs:
-                print(f'{Fore.RED}Invalid Input!{Style.RESET_ALL}')
+                print(f'{RED}Invalid Input!{RESET}')
                 return
         except:
             print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
