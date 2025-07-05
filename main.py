@@ -312,9 +312,9 @@ def run():
                 return
             leverage = input(f"{YELLOW}Leverage:\n> {RESET}").strip()
             if not leverage or not leverage.isdigit():
-                print(f'{Fore.RED}Leverage is mandatory and must be digit{Style.RESET_ALL}')
+                print(f'{RED}Leverage is mandatory and must be digit{RESET}')
                 return
-            position_side = input(f"{Fore.YELLOW}Position Side:\n1. Long\n2. Short\n3. Both\n> {Style.RESET_ALL}").strip()
+            position_side = input(f"{YELLOW}Position Side:\n1. Long\n2. Short\n3. Both\n> {RESET}").strip()
             if not position_side in valid_inputs:
                 print(f'{Fore.RED}Invalid Input!{Style.RESET_ALL}')
                 return
