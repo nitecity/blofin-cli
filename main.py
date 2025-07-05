@@ -316,10 +316,10 @@ def run():
                 return
             position_side = input(f"{YELLOW}Position Side:\n1. Long\n2. Short\n3. Both\n> {RESET}").strip()
             if not position_side in valid_inputs:
-                print(f'{Fore.RED}Invalid Input!{Style.RESET_ALL}')
+                print(f'{RED}Invalid Input!{RESET}')
                 return
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
 
         position_side_map = {
