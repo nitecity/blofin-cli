@@ -360,14 +360,14 @@ def run():
 
         with open(envfile, 'r') as file:
                 contents = file.read()
-                print(f"{Fore.CYAN}{contents}{Style.RESET_ALL}")
+                print(f"{CYAN}{contents}{RESET}")
 
     elif prompt == "11":
 
         try:
-            modify = input(f'{Fore.YELLOW}\n1. Modify API Key\n2. Modify API Secret\n3. Modify Passphrase\n4. Modify All\n> {Style.RESET_ALL}').strip()
+            modify = input(f'{YELLOW}\n1. Modify API Key\n2. Modify API Secret\n3. Modify Passphrase\n4. Modify All\n> {RESET}').strip()
         except:
-            print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
+            print(f'{RED}\nOperation cancelled by user{RESET}')
             return
         
         if modify == "1":
