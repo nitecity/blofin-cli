@@ -373,7 +373,7 @@ def run():
         if modify == "1":
 
             try:
-                api_key = input(f'{Fore.YELLOW}New API Key:\n> {Style.RESET_ALL}').strip()
+                api_key = input(f'{YELLOW}New API Key:\n> {RESET}').strip()
             except:
                 print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
                 return
