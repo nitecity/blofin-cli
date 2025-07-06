@@ -345,7 +345,7 @@ def run():
                 print(f'{RED}Invalid Input!{RESET}')
                 return
         except:
-            print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
+            print(f"{RED}\nOperation cancelled by user{RESET}")
             return
         
         marginMode_map = {
