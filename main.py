@@ -375,13 +375,13 @@ def run():
             try:
                 api_key = input(f'{YELLOW}New API Key:\n> {RESET}').strip()
             except:
-                print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
+                print(f'{RED}\nOperation cancelled by user{RESET}')
                 return
             
             if api_key:
                 load_dotenv(envfile)
                 set_key(envfile, 'API_KEY', api_key)
-                print(f'{Fore.GREEN}API Key Updated!{Style.RESET_ALL}')
+                print(f'{GREEN}API Key Updated!{RESET}')
             else:
                 print(f"{Fore.YELLOW}No input! No changes made!{Style.RESET_ALL}")
 
