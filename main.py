@@ -383,14 +383,14 @@ def run():
                 set_key(envfile, 'API_KEY', api_key)
                 print(f'{GREEN}API Key Updated!{RESET}')
             else:
-                print(f"{Fore.YELLOW}No input! No changes made!{Style.RESET_ALL}")
+                print(f"{YELLOW}No input! No changes made!{RESET}")
 
         elif modify == "2":
 
             try:
-                api_secret = input(f'{Fore.YELLOW}New API Secret:\n> {Style.RESET_ALL}').strip()
+                api_secret = input(f'{YELLOW}New API Secret:\n> {RESET}').strip()
             except:
-                print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
+                print(f'{RED}\nOperation cancelled by user{RESET}')
                 return
 
             if api_secret:
