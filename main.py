@@ -396,7 +396,7 @@ def run():
             if api_secret:
                 load_dotenv(envfile)
                 set_key(envfile, 'SECRET', api_secret)
-                print(f'{Fore.GREEN}API Secret Updated{Style.RESET_ALL}')
+                print(f'{GREEN}API Secret Updated{RESET}')
             else:
                 print(f'{Fore.YELLOW}No input! No changes made!{Style.RESET_ALL}')
 
