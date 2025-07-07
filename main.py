@@ -398,12 +398,12 @@ def run():
                 set_key(envfile, 'SECRET', api_secret)
                 print(f'{GREEN}API Secret Updated{RESET}')
             else:
-                print(f'{Fore.YELLOW}No input! No changes made!{Style.RESET_ALL}')
+                print(f'{YELLOW}No input! No changes made!{RESET}')
 
         elif modify == "3":
 
             try:
-                passphrase = input(f'{Fore.YELLOW}New Passphrase:\n> {Style.RESET_ALL}').strip()
+                passphrase = input(f'{YELLOW}New Passphrase:\n> {RESET}').strip()
             except:
                 print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
                 return
