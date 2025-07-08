@@ -419,8 +419,8 @@ def run():
                 
             try:
                 api_key = input(f'{YELLOW}New API Key:\n> {RESET}').strip()
-                api_secret = input(f'{Fore.YELLOW}New API Secret:\n> {Style.RESET_ALL}').strip()
-                passphrase = input(f'{Fore.YELLOW}New Passphrase:\n> {Style.RESET_ALL}').strip()
+                api_secret = input(f'{YELLOW}New API Secret:\n> {RESET}').strip()
+                passphrase = input(f'{YELLOW}New Passphrase:\n> {RESET}').strip()
             except:
                 print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
                 return
