@@ -405,20 +405,20 @@ def run():
             try:
                 passphrase = input(f'{YELLOW}New Passphrase:\n> {RESET}').strip()
             except:
-                print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
+                print(f'{RED}\nOperation cancelled by user{RESET}')
                 return
             
             if passphrase:
                 load_dotenv(envfile)
                 set_key(envfile, 'PASSPHRASE', passphrase)
-                print(f'{Fore.GREEN}Passphrase Updated!{Style.RESET_ALL}')
+                print(f'{GREEN}Passphrase Updated!{RESET}')
             else:
-                print(f'{Fore.YELLOW}No input! No changes made!{Style.RESET_ALL}')
+                print(f'{YELLOW}No input! No changes made!{RESET}')
 
         elif modify == "4":
                 
             try:
-                api_key = input(f'{Fore.YELLOW}New API Key:\n> {Style.RESET_ALL}').strip()
+                api_key = input(f'{YELLOW}New API Key:\n> {RESET}').strip()
                 api_secret = input(f'{Fore.YELLOW}New API Secret:\n> {Style.RESET_ALL}').strip()
                 passphrase = input(f'{Fore.YELLOW}New Passphrase:\n> {Style.RESET_ALL}').strip()
             except:
