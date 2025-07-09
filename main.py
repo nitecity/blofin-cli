@@ -435,7 +435,7 @@ def run():
                 print(f'{YELLOW}One or more fields are empty. No changes made!{RESET}')
         
         else:
-            print(f'{Fore.RED}Invalid Option!{Style.RESET_ALL}')
+            print(f'{RED}Invalid Option!{RESET}')
     
     elif prompt == "12":
 
