@@ -422,7 +422,7 @@ def run():
                 api_secret = input(f'{YELLOW}New API Secret:\n> {RESET}').strip()
                 passphrase = input(f'{YELLOW}New Passphrase:\n> {RESET}').strip()
             except:
-                print(f'{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}')
+                print(f'{RED}\nOperation cancelled by user{RESET}')
                 return
 
             if api_key and api_secret and passphrase:
@@ -430,7 +430,7 @@ def run():
                 set_key(envfile, 'API_KEY', api_key)
                 set_key(envfile, 'SECRET', api_secret)
                 set_key(envfile, 'PASSPHRASE', passphrase)
-                print(f'{Fore.GREEN}API Key, Secret and Passphrase Updated!{Style.RESET_ALL}')
+                print(f'{GREEN}API Key, Secret and Passphrase Updated!{RESET}')
             else:
                 print(f'{Fore.YELLOW}One or more fields are empty. No changes made!{Style.RESET_ALL}')
         
