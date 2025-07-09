@@ -432,7 +432,7 @@ def run():
                 set_key(envfile, 'PASSPHRASE', passphrase)
                 print(f'{GREEN}API Key, Secret and Passphrase Updated!{RESET}')
             else:
-                print(f'{Fore.YELLOW}One or more fields are empty. No changes made!{Style.RESET_ALL}')
+                print(f'{YELLOW}One or more fields are empty. No changes made!{RESET}')
         
         else:
             print(f'{Fore.RED}Invalid Option!{Style.RESET_ALL}')
