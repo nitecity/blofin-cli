@@ -445,9 +445,9 @@ def run():
     elif prompt == "13":
         try:
             symbol = input(f'{YELLOW}\nEnter symbol: [Default: All symbols]\n> {RESET}')
-            limit = input(f'{Fore.YELLOW}How many trades: [Default: 10]\n> {Style.RESET_ALL}')
+            limit = input(f'{YELLOW}How many trades: [Default: 10]\n> {RESET}')
             if not limit == '' and not limit.isdigit():
-                print(f'{Fore.RED}Limit value must be digit{Style.RESET_ALL}')
+                print(f'{RED}Limit value must be digit{RESET}')
                 return
         except:
             print(f"{Fore.RED}\nOperation cancelled by user{Style.RESET_ALL}")
