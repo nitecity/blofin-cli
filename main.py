@@ -5,8 +5,6 @@ from dotenv import load_dotenv, set_key
 from api import Blofin
 from colorama import Fore, Style, init
 
-init()
-
 # Colors
 CYAN = Fore.CYAN
 YELLOW = Fore.YELLOW
@@ -17,7 +15,9 @@ LIGHTBLUE_EX = Fore.LIGHTBLUE_EX
 LIGHTRED_EX = Fore.LIGHTRED_EX
 RESET = Style.RESET_ALL
 BRIGHT = Style.BRIGHT
-
+LIGHTMAGENTA = Fore.LIGHTMAGENTA_EX
+LIGHTGREEN_EX = Fore.LIGHTGREEN_EX
+LIGHTCYAN_EX = Fore.LIGHTCYAN_EX
 def run():
 
     envfile = '.env'
@@ -53,38 +53,38 @@ def run():
     
 
     try:
-        print(f"{YELLOW}--------------------")
-        print("1. Place Order")
-        print("--------------------")
-        print("2. Pending Orders")
-        print("--------------------")
-        print("3. Open Positions")
-        print("--------------------")
-        print("4. Cancel Order")
-        print("--------------------")
-        print("5. Close Position")
-        print("--------------------")
-        print("6. Get Leverage")
-        print("--------------------")
-        print("7. Set Leverage")
-        print("--------------------")
-        print("8. Get Margin Mode")
-        print("--------------------")
-        print("9. Set Margin Mode")
-        print("--------------------")
-        print("10. Print API Credentials")
-        print("--------------------")
-        print("11. Modify API Credentials")
-        print("--------------------")
-        print("12. Get Balance")
-        print("--------------------")
-        print("13. Trade History")
-        print("--------------------")
-        print("14. Info About Size")
-        print("--------------------")
-        print("0. Exit")
-        print(f"--------------------{RESET}")
-        prompt = input(f"{YELLOW}> {RESET}")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}1. Place Order")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}2. Pending Orders")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}3. Open Positions")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}4. Cancel Order")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}5. Close Position")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}6. Get Leverage")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}7. Set Leverage")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}8. Get Margin Mode")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}9. Set Margin Mode")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}10. Print API Credentials")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}11. Modify API Credentials")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}12. Get Balance")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}13. Trade History")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}14. Info About Size")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        print(f"{YELLOW}0. Exit")
+        print(f"{LIGHTBLUE_EX}--------------------------")
+        prompt = input(f"> {RESET}")
     except:
         print(f"{RED}\nOperation cancelled by user{RESET}")
         return
@@ -94,13 +94,24 @@ def run():
         try:
             valid_inputs = ['1', '2', '3', '4']
             price = None
-
-            symbol = input(f'{YELLOW}Enter Symbol\nExample: [btc] | [eth]\n> {RESET}').upper().strip()
+            print(f'{YELLOW}Enter Symbol: e.g, {MAGENTA}btc{RESET}')
+            print("--------------------")
+            symbol = input(f'> {RESET}').upper().strip()
             b = Blofin(symbol+"-USDT")
             if not b.get_market_price()[1]:
                 print(f"{RED}Invalid Symbol{RESET}")
                 return
-            order_type = input(f"{YELLOW}Order Type:\n1. limit\n2. market\n3. trigger\n4. post_only\n> {RESET}").lower().strip()
+            print(f'{MAGENTA}Order Type:')
+            print("--------------------")
+            print("1. limit")
+            print("--------------------")
+            print("2. market")
+            print("--------------------")
+            print("3. trigger/algo")
+            print("--------------------")
+            print("4. post_only")
+
+            order_type = input(f"> {RESET}").lower().strip()
             if not order_type in valid_inputs:
                 print(f'{RED}Invalid Input{RESET}')
                 return
