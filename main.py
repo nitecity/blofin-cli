@@ -95,21 +95,22 @@ def run():
             valid_inputs = ['1', '2', '3', '4']
             price = None
             print(f'{YELLOW}Enter Symbol: e.g, {MAGENTA}btc{RESET}')
-            print("--------------------")
+            print(f"{LIGHTBLUE_EX}--------------------")
             symbol = input(f'> {RESET}').upper().strip()
             b = Blofin(symbol+"-USDT")
             if not b.get_market_price()[1]:
                 print(f"{RED}Invalid Symbol{RESET}")
                 return
-            print(f'{MAGENTA}Order Type:')
-            print("--------------------")
-            print("1. limit")
-            print("--------------------")
-            print("2. market")
-            print("--------------------")
-            print("3. trigger/algo")
-            print("--------------------")
-            print("4. post_only")
+            print(f'{YELLOW}Order Type:')
+            print(f"--------------------")
+            print(f"1. limit")
+            print(f"--------------------")
+            print(f"2. market")
+            print(f"--------------------")
+            print(f"3. trigger/algo")
+            print(f"--------------------")
+            print(f"4. post_only")
+            print(f"--------------------")
 
             order_type = input(f"> {RESET}").lower().strip()
             if not order_type in valid_inputs:
