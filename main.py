@@ -102,8 +102,8 @@ def run():
                 print(f"{RED}Invalid Symbol{RESET}")
                 return
             print(f'{YELLOW}Order Type:')
-            print(f"--------------------")
-            print(f"1. limit")
+            print(f"{LIGHTBLUE_EX}--------------------")
+            print(f"{YELLOW}1. limit")
             print(f"--------------------")
             print(f"2. market")
             print(f"--------------------")
