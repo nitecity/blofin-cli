@@ -106,7 +106,7 @@ def run():
             print(f"{YELLOW}1. limit")
             print(f"{LIGHTBLUE_EX}--------------------")
             print(f"{YELLOW}2. market")
-            print(f"--------------------")
+            print(f"{LIGHTBLUE_EX}--------------------")
             print(f"3. trigger/algo")
             print(f"--------------------")
             print(f"4. post_only")
