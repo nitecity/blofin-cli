@@ -109,7 +109,7 @@ def run():
             print(f"{LIGHTBLUE_EX}--------------------")
             print(f"{YELLOW}3. trigger/algo")
             print(f"{LIGHTBLUE_EX}--------------------")
-            print(f"4. post_only")
+            print(f"{YELLOW}4. post_only")
             print(f"--------------------")
 
             order_type = input(f"> {RESET}").lower().strip()
