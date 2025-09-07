@@ -23,7 +23,7 @@ def run():
     envfile = '.env'
     if not os.path.isfile(envfile):
         try:
-            print(f'{CYAN}\nBefore we get started, you need to provide the API credentials you got from https://blofin.com/account/apis{RESET}')
+            print(f'{CYAN}\nBefore we get started, you need to provide your API credentials from https://blofin.com/account/apis{RESET}')
             api_key = input(f'{YELLOW}API Key:\n> {RESET}').strip()
             secret = input(f'{YELLOW}Secret Key:\n> {RESET}').strip()
             passphrase = input(f'{YELLOW}Passphrase:\n> {RESET}').strip()
