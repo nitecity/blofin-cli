@@ -110,7 +110,7 @@ def run():
             print(f"{YELLOW}3. trigger/algo")
             print(f"{LIGHTBLUE_EX}--------------------")
             print(f"{YELLOW}4. post_only")
-            print(f"--------------------")
+            print(f"{LIGHTBLUE_EX}--------------------")
 
             order_type = input(f"> {RESET}").lower().strip()
             if not order_type in valid_inputs:
