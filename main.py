@@ -117,8 +117,11 @@ def run():
                 print(f'{RED}Invalid Input{RESET}')
                 return
             print(f'{YELLOW}Position Side:')
+            print(f'--------------------')
             print(f'1. long')
+            print(f'--------------------')
             print(f'2. short')
+            print(f'--------------------')
             position_side = input(f"{YELLOW}> {RESET}").lower().strip()
             if not position_side in valid_inputs[:2]:
                 print(f'{RED}Invalid Input{RESET}')
