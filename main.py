@@ -117,7 +117,7 @@ def run():
                 print(f'{RED}Invalid Input{RESET}')
                 return
             print(f'{YELLOW}Position Side:')
-            print(f'--------------------')
+            print(f'{LIGHTBLUE_EX}--------------------')
             print(f'1. long')
             print(f'--------------------')
             print(f'2. short')
