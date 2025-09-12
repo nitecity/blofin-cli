@@ -118,7 +118,7 @@ def run():
                 return
             print(f'{YELLOW}Position Side:')
             print(f'{LIGHTBLUE_EX}--------------------')
-            print(f'1. long')
+            print(f'{YELLOW}1. long')
             print(f'--------------------')
             print(f'2. short')
             print(f'--------------------')
