@@ -119,7 +119,7 @@ def run():
             print(f'{YELLOW}Position Side:')
             print(f'{LIGHTBLUE_EX}--------------------')
             print(f'{YELLOW}1. long')
-            print(f'--------------------')
+            print(f'{LIGHTBLUE_EX}--------------------')
             print(f'2. short')
             print(f'--------------------')
             position_side = input(f"{YELLOW}> {RESET}").lower().strip()
