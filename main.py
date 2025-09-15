@@ -121,7 +121,7 @@ def run():
             print(f'{YELLOW}1. long')
             print(f'{LIGHTBLUE_EX}--------------------')
             print(f'{YELLOW}2. short')
-            print(f'--------------------')
+            print(f'{LIGHTBLUE_EX}--------------------')
             position_side = input(f"{YELLOW}> {RESET}").lower().strip()
             if not position_side in valid_inputs[:2]:
                 print(f'{RED}Invalid Input{RESET}')
